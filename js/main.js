@@ -148,6 +148,77 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const demoProjectSelect = document.querySelector("#demo-project");
+  const projectProgressContent = document.querySelector("#project-progress-content");
+  if (demoProjectSelect && projectProgressContent) {
+    const demoProjects = {
+      "brand-identity": {
+        title: "Brand identity project",
+        description: "A sample view of the stages and deliverables in a brand identity collaboration.",
+        update: "Example update: visual directions are being prepared for review.",
+        milestones: [
+          ["Discovery & kickoff", "Goals, audience, and project requirements agreed together.", "Approved project brief", "complete"],
+          ["Brand strategy", "Positioning and creative direction aligned to the business.", "Strategy and direction", "complete"],
+          ["Visual concepts", "Initial identity concepts are being prepared for review.", "Brand concept presentation", "current"],
+          ["Refinement & approval", "Feedback is applied to the selected direction before approval.", "Approved identity artwork", "upcoming"],
+          ["Files & handover", "Final files and practical usage guidance are prepared for handover.", "Final brand asset package", "upcoming"]
+        ]
+      },
+      "business-website": {
+        title: "Business website project",
+        description: "A sample website build showing checkpoints from discovery through launch handover.",
+        update: "Example update: the first website build is ready for content and layout review.",
+        milestones: [
+          ["Discovery & scope", "Audience, site goals, key pages, and requirements agreed.", "Approved website brief", "complete"],
+          ["Structure & content", "Page hierarchy and content requirements mapped for review.", "Sitemap and content plan", "complete"],
+          ["Design direction", "Visual layout direction reviewed and approved for the build.", "Approved page designs", "complete"],
+          ["Development & review", "Website pages and agreed functionality assembled for testing.", "Preview website for feedback", "current"],
+          ["Testing & handover", "Final checks, launch preparation, and administrator guidance.", "Live site and handover notes", "upcoming"]
+        ]
+      },
+      "digital-marketing": {
+        title: "Digital marketing project",
+        description: "A sample campaign collaboration showing planning, execution, review, and recommendations.",
+        update: "Example update: campaign priorities and audience segments are being aligned.",
+        milestones: [
+          ["Kickoff & goals", "Business goals, audience, channels, and success measures discussed.", "Campaign brief", "complete"],
+          ["Strategy & plan", "Channel approach, content direction, and activity schedule prepared.", "Campaign strategy and calendar", "current"],
+          ["Creative & setup", "Campaign assets and tracking are prepared for approval.", "Approved campaign assets", "upcoming"],
+          ["Campaign launch", "Approved activity is published and monitored against agreed measures.", "Live campaign activity", "upcoming"],
+          ["Review & next steps", "Performance is reviewed and practical next steps are shared.", "Campaign summary and recommendations", "upcoming"]
+        ]
+      }
+    };
+
+    const renderDemoProject = () => {
+      const project = demoProjects[demoProjectSelect.value];
+      if (!project) {
+        console.error("The selected demo project could not be found.");
+        return;
+      }
+      const completeCount = project.milestones.filter((milestone) => milestone[3] === "complete").length;
+      const progress = Math.round((completeCount / project.milestones.length) * 100);
+      const currentMilestone = project.milestones.find((milestone) => milestone[3] === "current");
+      document.querySelector("#project-title").textContent = project.title;
+      document.querySelector("#project-description").textContent = project.description;
+      document.querySelector("#project-current-stage").textContent = currentMilestone ? currentMilestone[0] : "Complete";
+      document.querySelector("#project-progress-value").textContent = `${progress}% of milestones complete`;
+      document.querySelector("#project-progress-fill").style.width = `${progress}%`;
+      document.querySelector("#project-update").textContent = project.update;
+      const progressBar = document.querySelector('[role="progressbar"][aria-label="Completed project milestones"]');
+      progressBar.setAttribute("aria-valuenow", String(progress));
+      document.querySelector("#project-milestones").innerHTML = project.milestones.map((milestone, index) => {
+        const [title, description, deliverable, status] = milestone;
+        const marker = status === "complete" ? "✓" : String(index + 1);
+        const label = status === "current" ? "In progress" : status === "complete" ? "Complete" : "Upcoming";
+        const stateClass = status === "complete" ? "is-complete" : status === "current" ? "is-current" : "";
+        return `<li class="project-milestone ${stateClass}"><span class="milestone-marker" aria-hidden="true">${marker}</span><div class="milestone-copy"><div class="milestone-heading"><h3>${title}</h3><span class="milestone-status">${label}</span></div><p>${description}</p><span class="milestone-deliverable"><strong>Deliverable:</strong> ${deliverable}</span></div></li>`;
+      }).join("");
+    };
+
+    demoProjectSelect.addEventListener("change", renderDemoProject);
+  }
+
   const topButton = document.querySelector(".float-btn.top");
   if (topButton) {
     const updateTopButton = () => topButton.classList.toggle("visible", window.scrollY > 420);
@@ -206,32 +277,104 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const articles = {
-    "retail-launch": {
-      category: "Case Study",
-      title: "A neighborhood retailer finds its next 1,000 customers online",
-      date: "18 September 2026",
-      intro: "A Nairobi home and lifestyle retailer had a loyal walk-in audience but little visibility beyond its neighborhood. The team wanted a practical digital foundation that could turn local discovery into store visits and enquiries.",
-      challenge: "An inconsistent social presence, no reliable measurement, and a product catalogue that was difficult to browse on mobile.",
-      solution: "We refreshed the visual system, planned a six-week content calendar, improved local search listings, and ran tightly targeted Meta campaigns with clear enquiry tracking.",
-      results: "Over the first campaign period, qualified enquiries rose 64%, profile visits doubled, and the brand built a repeatable weekly content routine."
+    "wick-scents": {
+      category: "Client Work",
+      title: "Wick Scents",
+      intro: "A brand identity project for a luxury candle company.",
+      industry: "Luxury candles",
+      service: "Brand identity",
+      work: "Brand identity for a luxury candle company.",
+      date: "June 2024"
     },
-    "school-identity": {
-      category: "Case Study",
-      title: "Giving a growing school a brand families can recognize",
-      date: "02 August 2026",
-      intro: "A fast-growing learning centre needed a clear and welcoming identity to communicate its approach to parents across print, web, and social channels.",
-      challenge: "The school used several versions of its logo and had no shared guidelines for parent communications or admissions campaigns.",
-      solution: "We created a flexible identity toolkit, designed an admissions campaign, and delivered reusable templates for staff and social media.",
-      results: "The new admissions materials generated 38% more campaign enquiries than the school's previous intake campaign."
+    "lee-fashions-ke": {
+      category: "Client Work",
+      title: "Lee Fashions Ke",
+      intro: "A brand identity project for a fashion company.",
+      industry: "Fashion",
+      service: "Brand identity",
+      work: "Brand identity for a fashion company.",
+      date: "April 2023"
     },
-    "ngo-impact": {
-      category: "Case Study",
-      title: "Making an NGO's impact easier to understand and support",
-      date: "14 June 2026",
-      intro: "A community organization had powerful programme results but needed a concise digital story that partners and supporters could understand quickly.",
-      challenge: "Important programme information was scattered across long documents, making it hard for new partners to see the outcomes.",
-      solution: "We structured the impact narrative, designed a mobile-first campaign page, and created a consistent set of social and presentation graphics.",
-      results: "The campaign page recorded 2.3× more partner enquiries than the previous information page during its first eight weeks."
+    "tasean-ecotravel": {
+      category: "Client Work",
+      title: "Tasean EcoTravel",
+      intro: "A brand identity project for a travel company.",
+      industry: "Travel",
+      service: "Brand identity",
+      work: "Brand identity for a travel company.",
+      date: "September 2025"
+    },
+    "monarch-architecture": {
+      category: "Client Work",
+      title: "Monarch Architecture",
+      intro: "A brand identity project for a build and design company.",
+      industry: "Build and design",
+      service: "Brand identity",
+      work: "Brand identity for a build and design company.",
+      date: "March 2025"
+    },
+    "ecs-financial-solutions": {
+      category: "Client Work",
+      title: "ECS Financial Solutions",
+      intro: "A brand identity project for a financial solutions company.",
+      industry: "Financial solutions",
+      service: "Brand identity",
+      work: "Brand identity for a financial solutions company.",
+      date: "January 2026"
+    },
+    "construction-networking-nairobi": {
+      category: "Client Work",
+      title: "Construction Networking Nairobi",
+      intro: "A web development project for a construction event company.",
+      industry: "Construction events",
+      service: "Web development",
+      work: "Web development for a construction event company.",
+      date: "October 2025"
+    },
+    "eterna-lume-studio": {
+      category: "Client Work",
+      title: "Eterna Lume Studio",
+      intro: "A web development project for an interior design studio.",
+      industry: "Interior design",
+      service: "Web development",
+      work: "Web development for an interior design studio.",
+      date: "May 2025"
+    },
+    "roselle-interiors": {
+      category: "Client Work",
+      title: "Roselle Interiors",
+      intro: "A web development project for an interior design company.",
+      industry: "Interior design",
+      service: "Web development",
+      work: "Web development for an interior design company.",
+      date: "February 2026"
+    },
+    "tenthgear-motorhub": {
+      category: "Client Work",
+      title: "TenthGear Motorhub",
+      intro: "An e-commerce website project for a 4x4 automotive parts company.",
+      industry: "4x4 automotive parts",
+      service: "Web development · E-commerce",
+      work: "E-commerce website development for a 4x4 automotive parts company.",
+      date: "July 2023"
+    },
+    "kepsa": {
+      category: "Client Work",
+      title: "KEPSA",
+      intro: "Event design consultation for an organisation in the private sector.",
+      industry: "Private sector",
+      service: "Event design consultation",
+      work: "Event design consultation.",
+      date: "November 2024"
+    },
+    "ism-africa": {
+      category: "Client Work",
+      title: "ISM Africa",
+      intro: "A digital strategy project for a construction company.",
+      industry: "Construction",
+      service: "Digital strategy",
+      work: "Digital strategy for a construction company.",
+      date: "2024–2026"
     },
     "content-plan": {
       category: "Tips & Insights",
@@ -316,10 +459,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const article = articles[button.dataset.article];
       if (!article || !modal || !modalContent) return;
       modalOpener = button;
-      const caseHtml = article.category === "Case Study"
-        ? `<div class="case-details"><p><strong>Client:</strong> ${button.dataset.client || "A Welyd Networks client"}</p><p><strong>Challenge:</strong> ${article.challenge}</p><p><strong>Solution:</strong> ${article.solution}</p><p><strong>Results:</strong> ${article.results}</p></div>`
+      const caseHtml = article.category === "Client Work"
+        ? `<div class="case-details"><p><strong>Industry:</strong> ${article.industry}</p><p><strong>Service:</strong> ${article.service}</p><p><strong>Work:</strong> ${article.work}</p></div>`
         : `<div class="case-details"><p><strong>Key takeaway:</strong> ${article.results}</p><p>${article.solution}</p></div>`;
-      modalContent.innerHTML = `<span class="category-tag">${article.category}</span><p class="article-meta">${article.date}</p><h2 id="modal-title">${article.title}</h2><p>${article.intro}</p>${caseHtml}`;
+      const articleDate = article.date
+        ? `<p class="article-meta">${article.category === "Client Work" ? `Project period: ${article.date}` : article.date}</p>`
+        : "";
+      modalContent.innerHTML = `<span class="category-tag">${article.category}</span>${articleDate}<h2 id="modal-title">${article.title}</h2><p>${article.intro}</p>${caseHtml}`;
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-open");
