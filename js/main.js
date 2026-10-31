@@ -14,6 +14,26 @@ try {
 document.documentElement.dataset.theme = savedTheme;
 
 document.addEventListener("DOMContentLoaded", () => {
+  const loadingScreen = document.querySelector(".loading-screen");
+  if (loadingScreen) {
+    const loadingProgress = loadingScreen.querySelector(".loading-progress");
+    const startedAt = performance.now();
+    document.documentElement.classList.add("is-loading");
+
+    const progressInterval = window.setInterval(() => {
+      const progress = Math.min(Math.round((performance.now() - startedAt) / 20), 100);
+      loadingProgress?.setAttribute("aria-valuenow", String(progress));
+    }, 50);
+
+    window.setTimeout(() => {
+      window.clearInterval(progressInterval);
+      loadingProgress?.setAttribute("aria-valuenow", "100");
+      document.documentElement.classList.remove("is-loading");
+      loadingScreen.classList.add("is-hidden");
+      window.setTimeout(() => loadingScreen.remove(), 350);
+    }, 2000);
+  }
+
   const rotatingHeadline = document.querySelector(".hero-rotating-text");
   if (rotatingHeadline && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const phrases = ["easy to find.", "easy to trust.", "ready to grow."];

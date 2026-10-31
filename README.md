@@ -1,6 +1,6 @@
 # Welyd Networks website
 
-A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, website design, and a project-progress dashboard prototype. No build step or package install is required.
+A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, website design, and a project-progress dashboard prototype. Every page displays a two-second loading screen with a progress bar. No build step or package install is required.
 
 The Nairobi Events page contains 15 illustrative event formats for networking, exhibiting, learning, partnerships, and community engagement. These are sample use cases, not a live or verified event calendar; confirm event schedules and venues with organizers.
 
