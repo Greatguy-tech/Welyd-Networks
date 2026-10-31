@@ -11,12 +11,13 @@ Visitors can switch between the default and dark themes using the floating theme
 1. Open this folder in Visual Studio Code.
 2. Open `index.html` directly in a browser, or use the Live Server extension and choose **Open with Live Server**.
 
-The site uses a Google Fonts stylesheet and Unsplash-hosted sample photography. Those external assets need an internet connection; the provided logo and favicon are local files.
+The site uses external Google Fonts and photography from Unsplash and Magnific, so those assets need an internet connection; the provided logo and favicon are local files.
 
 ## Edit the site
 
 - Replace the sample copy and contact details in the HTML pages.
 - Update the individual service pages (`branding-design.html`, `digital-marketing.html`, and `website-design.html`) as your offering and deliverables evolve. The service dropdown is shared across the site navigation.
+- The homepage highlights selected client projects; `news.html` lists the provided 11 client projects by service and industry. The project summaries do not claim unprovided results or display client artwork. Generic Magnific stock photos are used as representative industry imagery, not client deliverables; visible captions credit and link to each contributor and photo listing.
 - Use the web-sized image derivatives in `images/optimized/` in page layouts; the original supplied image files remain in `images/`.
 - The site header and social previews use `images/welyd-wordmark.png`; the footer uses the transparent `images/welyd-wordmark-dark.png` in both themes. The favicon uses the square `images/welyd-icon.png` crop. Dark theme switches the header to the white-wordmark variant.
 - Replace the Unsplash image URLs with your own optimized images and descriptive alt text.
@@ -48,5 +49,5 @@ Upload the folder contents to any static web host, such as GitHub Pages, Netlify
 - [ ] Set up a real Formspree endpoint and test inquiry delivery.
 - [ ] Connect the newsletter to an email marketing provider.
 - [ ] Confirm service inclusions, scope-dependent starting prices, and client results before publishing.
-- [ ] Replace the sample team profiles, testimonials, and case studies with approved information.
+- [ ] Confirm permission to name clients and publish project details; replace sample team profiles and testimonials with approved information.
 - [ ] Confirm the target audience and any partner/certification claims before adding them.
