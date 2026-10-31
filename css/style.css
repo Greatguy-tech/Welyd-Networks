@@ -500,6 +500,7 @@ p { margin: 0 0 1rem; color: var(--muted); }
   .section { padding: 65px 0; }
   .brand img { width: 138px; height: 54px; }
   .hero { padding: 44px 0 55px; }
+  .hero-rotating-text { display: inline; }
   .hero-copy > p:not(.eyebrow) { font-size: 1rem; }
   .hero-visual { min-height: 320px; }
   .hero-photo { border-radius: 25px 25px 25px 70px; }
