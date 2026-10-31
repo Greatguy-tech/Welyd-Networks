@@ -110,6 +110,7 @@ p { margin: 0 0 1rem; color: var(--muted); }
 .hero-grid { display: grid; align-items: center; gap: 45px; grid-template-columns: 1.02fr .98fr; }
 .hero-copy { max-width: 650px; }
 .hero-copy h1 { max-width: 700px; }
+.hero-rotating-text { display: inline-block; }
 .hero-copy > p:not(.eyebrow) { max-width: 570px; margin: 23px 0 28px; font-size: 1.13rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-note { display: flex; align-items: center; gap: 12px; margin-top: 30px; color: var(--muted); font-size: .88rem; }

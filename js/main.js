@@ -14,6 +14,33 @@ try {
 document.documentElement.dataset.theme = savedTheme;
 
 document.addEventListener("DOMContentLoaded", () => {
+  const rotatingHeadline = document.querySelector(".hero-rotating-text");
+  if (rotatingHeadline && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const phrases = ["easy to find.", "easy to trust.", "ready to grow."];
+    let phraseIndex = 0;
+    let characterIndex = phrases[phraseIndex].length;
+    let deleting = true;
+
+    const animateHeadline = () => {
+      const phrase = phrases[phraseIndex];
+      characterIndex += deleting ? -1 : 1;
+      rotatingHeadline.textContent = phrase.slice(0, characterIndex);
+
+      if (characterIndex === phrase.length) {
+        deleting = true;
+        window.setTimeout(animateHeadline, 1800);
+      } else if (characterIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        window.setTimeout(animateHeadline, 300);
+      } else {
+        window.setTimeout(animateHeadline, deleting ? 45 : 75);
+      }
+    };
+
+    window.setTimeout(animateHeadline, 1800);
+  }
+
   const floatingActions = document.querySelector(".floating-actions");
   if (floatingActions) {
     const themeButton = document.createElement("button");
