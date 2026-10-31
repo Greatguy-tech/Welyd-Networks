@@ -1,10 +1,12 @@
 # Welyd Networks website
 
-A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, and website design. No build step or package install is required.
+A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, website design, and a project-progress dashboard prototype. No build step or package install is required.
 
 The Nairobi Events page contains 15 illustrative event formats for networking, exhibiting, learning, partnerships, and community engagement. These are sample use cases, not a live or verified event calendar; confirm event schedules and venues with organizers.
 
 Visitors can switch between the default and dark themes using the floating theme button. The preference is saved in the browser for future visits.
+
+The Project Progress page demonstrates milestone tracking using illustrative sample projects. It is a front-end prototype only: it has no authentication, private client data, persistence, or live project updates. A secure client portal requires an authenticated backend and project-data storage before it can be used for real client collaboration.
 
 ## Run locally
 
@@ -16,6 +18,7 @@ The site uses external Google Fonts and photography from Unsplash and Magnific, 
 ## Edit the site
 
 - Replace the sample copy and contact details in the HTML pages.
+- The `project-progress.html` page demonstrates a sample project dashboard; milestone examples and progress figures are illustrative and are not connected to actual client projects.
 - Update the individual service pages (`branding-design.html`, `digital-marketing.html`, and `website-design.html`) as your offering and deliverables evolve. The service dropdown is shared across the site navigation.
 - The homepage highlights selected client projects; `news.html` lists the provided 11 client projects by service and industry. The project summaries do not claim unprovided results or display client artwork. Generic Magnific stock photos are used as representative industry imagery, not client deliverables; visible captions credit and link to each contributor and photo listing.
 - Use the web-sized image derivatives in `images/optimized/` in page layouts; the original supplied image files remain in `images/`.
