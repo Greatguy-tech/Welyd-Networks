@@ -61,6 +61,430 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(animateHeadline, 1800);
   }
 
+  const merchStore = document.querySelector(".merch-store");
+  if (merchStore) {
+    const storageKey = "welyd-merch-cart";
+    const productCards = [...merchStore.querySelectorAll(".merch-product-card")];
+    const products = new Map(productCards.map((card) => [card.dataset.productId, {
+      id: card.dataset.productId,
+      name: card.dataset.name,
+      description: card.dataset.description,
+      price: Number(card.dataset.price),
+      image: card.dataset.image,
+      colorImages: Object.fromEntries([...card.querySelectorAll(".merch-color option")].map((option) => [
+        option.value,
+        { src: option.dataset.image, alt: option.dataset.alt }
+      ])),
+      clothing: card.dataset.clothing === "true"
+    }]));
+    const sizeOptions = ["S", "M", "L", "XL", "XXL"];
+    let cart = [];
+    try {
+      const savedCart = localStorage.getItem(storageKey);
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        if (!Array.isArray(parsedCart)) throw new Error("Saved merchandise cart is not a list.");
+        cart = parsedCart.filter((item) => {
+          const product = products.get(item.id);
+          const validSize = product && (product.clothing ? sizeOptions.includes(item.size) : item.size === "One size");
+          return validSize && product.colorImages[item.color] && Number.isSafeInteger(item.quantity) && item.quantity > 0;
+        }).map((item) => ({ id: item.id, color: item.color, size: item.size, quantity: Math.min(item.quantity, 99) }));
+      }
+    } catch (error) {
+      console.warn("Could not read the saved merchandise cart.", error);
+    }
+
+    const saveCart = () => {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(cart));
+      } catch (error) {
+        console.warn("Could not save the merchandise cart in this browser.", error);
+      }
+    };
+    const formatPrice = (amount) => `KSh ${new Intl.NumberFormat("en-KE").format(amount)}`;
+    const cartList = merchStore.querySelector("[data-cart-items]");
+    const emptyMessage = merchStore.querySelector("[data-cart-empty]");
+    const subtotalLabel = merchStore.querySelector("[data-cart-subtotal]");
+    const cartStatus = merchStore.querySelector("[data-cart-status]");
+    const checkoutList = merchStore.querySelector("[data-checkout-items]");
+    const checkoutEmpty = merchStore.querySelector("[data-checkout-empty]");
+    const checkoutSubtotal = merchStore.querySelector("[data-checkout-subtotal]");
+
+    const addToCart = (product, color, size) => {
+      const item = cart.find((entry) => entry.id === product.id && entry.color === color && entry.size === size);
+      if (item) item.quantity = Math.min(item.quantity + 1, 99);
+      else cart.push({ id: product.id, color, size, quantity: 1 });
+      saveCart();
+      renderCart();
+      cartStatus.textContent = `${product.name}, ${color}${product.clothing ? `, size ${size},` : ","} added to your bag.`;
+    };
+
+    const renderCart = () => {
+      cartList.replaceChildren();
+      const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+      const subtotal = cart.reduce((total, item) => total + products.get(item.id).price * item.quantity, 0);
+      merchStore.querySelectorAll("[data-cart-count]").forEach((counter) => {
+        counter.textContent = String(itemCount);
+      });
+      subtotalLabel.textContent = formatPrice(subtotal);
+      emptyMessage.hidden = cart.length > 0;
+
+      cart.forEach((item) => {
+        const product = products.get(item.id);
+        const row = document.createElement("li");
+        row.className = "cart-item";
+        const image = document.createElement("img");
+        image.src = product.colorImages[item.color].src;
+        image.alt = "";
+        image.setAttribute("aria-hidden", "true");
+        const main = document.createElement("div");
+        main.className = "cart-item-main";
+        const name = document.createElement("span");
+        name.className = "cart-item-name";
+        name.textContent = product.name;
+        const variant = document.createElement("span");
+        variant.className = "cart-item-variant";
+        variant.textContent = `${item.color}${product.clothing ? ` · Size: ${item.size}` : ""}`;
+        const controls = document.createElement("div");
+        controls.className = "cart-item-controls";
+        const decrease = document.createElement("button");
+        decrease.className = "cart-quantity-button";
+        decrease.type = "button";
+        decrease.dataset.cartAction = "decrease";
+        decrease.dataset.cartKey = `${item.id}::${item.color}::${item.size}`;
+        decrease.setAttribute("aria-label", `Remove one ${product.name} from bag`);
+        decrease.textContent = "−";
+        const quantity = document.createElement("span");
+        quantity.className = "cart-quantity";
+        quantity.textContent = String(item.quantity);
+        const increase = document.createElement("button");
+        increase.className = "cart-quantity-button";
+        increase.type = "button";
+        increase.dataset.cartAction = "increase";
+        increase.dataset.cartKey = `${item.id}::${item.color}::${item.size}`;
+        increase.setAttribute("aria-label", `Add one ${product.name} to bag`);
+        increase.textContent = "+";
+        const price = document.createElement("span");
+        price.className = "cart-item-price";
+        price.textContent = formatPrice(product.price * item.quantity);
+        controls.append(decrease, quantity, increase);
+        main.append(name, variant, controls);
+        row.append(image, main, price);
+        cartList.append(row);
+      });
+
+      if (checkoutList && checkoutEmpty && checkoutSubtotal) {
+        checkoutList.replaceChildren();
+        checkoutEmpty.hidden = cart.length > 0;
+        checkoutSubtotal.textContent = formatPrice(subtotal);
+        cart.forEach((item) => {
+          const product = products.get(item.id);
+          const row = document.createElement("li");
+          row.className = "checkout-item";
+          const description = document.createElement("span");
+          description.textContent = `${product.name} · ${item.color}${product.clothing ? ` · ${item.size}` : ""} · Qty ${item.quantity}`;
+          const price = document.createElement("strong");
+          price.textContent = formatPrice(product.price * item.quantity);
+          row.append(description, price);
+          checkoutList.append(row);
+        });
+      }
+    };
+    renderCart();
+
+    productCards.forEach((card) => {
+      const colorSelect = card.querySelector(".merch-color");
+      if (!colorSelect) return;
+      colorSelect.addEventListener("change", () => {
+        const selected = colorSelect.selectedOptions[0];
+        const image = card.querySelector(".merch-product-image img");
+        image.src = selected.dataset.image;
+        image.alt = selected.dataset.alt;
+      });
+    });
+
+    merchStore.querySelectorAll("[data-merch-filter]").forEach((filter) => {
+      filter.addEventListener("click", () => {
+        const category = filter.dataset.merchFilter;
+        merchStore.querySelectorAll("[data-merch-filter]").forEach((button) => {
+          const selected = button === filter;
+          button.classList.toggle("is-active", selected);
+          button.setAttribute("aria-pressed", String(selected));
+        });
+        productCards.forEach((card) => {
+          card.hidden = category !== "all" && card.dataset.category !== category;
+        });
+      });
+    });
+
+    merchStore.querySelectorAll("[data-add-product]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".merch-product-card");
+        const product = products.get(card.dataset.productId);
+        const color = card.querySelector(".merch-color").value;
+        const sizeSelect = card.querySelector(".merch-size-choice");
+        const size = product.clothing ? sizeSelect.value : "One size";
+        if (!size) {
+          cartStatus.textContent = "Choose a size before adding this item.";
+          sizeSelect.focus();
+          return;
+        }
+        addToCart(product, color, size);
+      });
+    });
+
+    const previewDialog = merchStore.querySelector(".merch-preview-dialog");
+    if (previewDialog) {
+      const previewImage = previewDialog.querySelector("[data-preview-image]");
+      const previewTitle = previewDialog.querySelector("[data-preview-title]");
+      const previewPrice = previewDialog.querySelector("[data-preview-price]");
+      const previewDescription = previewDialog.querySelector("[data-preview-description]");
+      const previewColorLabel = previewDialog.querySelector("[data-preview-color-label]");
+      const previewColor = previewDialog.querySelector("[data-preview-color]");
+      const previewSizeLabel = previewDialog.querySelector("[data-preview-size-label]");
+      const previewSize = previewDialog.querySelector("[data-preview-size]");
+      const previewOneSize = previewDialog.querySelector("[data-preview-one-size]");
+      const previewStatus = previewDialog.querySelector("[data-preview-status]");
+      let previewProduct = null;
+
+      merchStore.querySelectorAll("[data-preview-product]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const card = button.closest(".merch-product-card");
+          previewProduct = products.get(card.dataset.productId);
+          const colorSelect = card.querySelector(".merch-color");
+          const selectedColor = colorSelect.value;
+          previewColor.replaceChildren();
+          Object.entries(previewProduct.colorImages).forEach(([color, image]) => {
+            const option = document.createElement("option");
+            option.value = color;
+            option.textContent = color;
+            option.selected = color === selectedColor;
+            previewColor.append(option);
+          });
+          previewColorLabel.hidden = Object.keys(previewProduct.colorImages).length < 2;
+          previewColor.hidden = previewColorLabel.hidden;
+          previewImage.src = previewProduct.colorImages[selectedColor].src;
+          previewImage.alt = previewProduct.colorImages[selectedColor].alt;
+          previewTitle.textContent = previewProduct.name;
+          previewPrice.textContent = formatPrice(previewProduct.price);
+          previewDescription.textContent = previewProduct.description;
+          previewStatus.textContent = "";
+          previewSize.replaceChildren();
+          previewSizeLabel.hidden = !previewProduct.clothing;
+          previewSize.hidden = !previewProduct.clothing;
+          previewOneSize.hidden = previewProduct.clothing;
+          if (previewProduct.clothing) {
+            const prompt = document.createElement("option");
+            prompt.value = "";
+            prompt.textContent = "Choose a size";
+            previewSize.append(prompt);
+            sizeOptions.forEach((size) => {
+              const option = document.createElement("option");
+              option.value = size;
+              option.textContent = size;
+              previewSize.append(option);
+            });
+          }
+          previewDialog.showModal();
+        });
+      });
+
+      previewColor.addEventListener("change", () => {
+        const image = previewProduct.colorImages[previewColor.value];
+        previewImage.src = image.src;
+        previewImage.alt = image.alt;
+      });
+      previewDialog.querySelector("[data-preview-close]").addEventListener("click", () => previewDialog.close());
+      previewDialog.addEventListener("click", (event) => {
+        if (event.target === previewDialog) previewDialog.close();
+      });
+      previewDialog.querySelector("[data-preview-add]").addEventListener("click", () => {
+        if (!previewProduct) return;
+        const size = previewProduct.clothing ? previewSize.value : "One size";
+        if (!size) {
+          previewStatus.textContent = "Choose a size before adding this item.";
+          previewSize.focus();
+          return;
+        }
+        addToCart(previewProduct, previewColor.value, size);
+        previewStatus.textContent = "Added to your bag.";
+      });
+    }
+
+    cartList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-cart-action]");
+      if (!button) return;
+      const [id, color, size] = button.dataset.cartKey.split("::");
+      const item = cart.find((entry) => entry.id === id && entry.color === color && entry.size === size);
+      if (!item) return;
+      if (button.dataset.cartAction === "increase") item.quantity = Math.min(item.quantity + 1, 99);
+      else if (button.dataset.cartAction === "decrease") {
+        if (item.quantity <= 1) cart = cart.filter((entry) => entry !== item);
+        else item.quantity -= 1;
+      }
+      saveCart();
+      renderCart();
+      cartStatus.textContent = "Your bag has been updated.";
+    });
+
+    merchStore.querySelector("[data-cart-clear]").addEventListener("click", () => {
+      cart = [];
+      saveCart();
+      renderCart();
+      cartStatus.textContent = "Your bag is empty.";
+    });
+
+    const cartDialog = merchStore.querySelector("#merch-cart");
+    merchStore.querySelector("[data-cart-toggle]").addEventListener("click", () => {
+      if (!cartDialog.open) {
+        const cartButton = merchStore.querySelector("[data-cart-toggle]");
+        const buttonRect = cartButton.getBoundingClientRect();
+        cartDialog.style.setProperty("--cart-top", `${Math.max(12, buttonRect.bottom + 8)}px`);
+        cartDialog.style.setProperty("--cart-right", `${Math.max(12, window.innerWidth - buttonRect.right)}px`);
+        cartDialog.showModal();
+      }
+    });
+    cartDialog.querySelector("[data-cart-close]").addEventListener("click", () => cartDialog.close());
+    cartDialog.addEventListener("click", (event) => {
+      if (event.target === cartDialog) cartDialog.close();
+    });
+  }
+
+  const deliveryCheckoutForm = document.querySelector("#delivery-checkout-form");
+  if (deliveryCheckoutForm) {
+    const catalog = {
+      hoodie: { name: "Welyd Hoodie", price: 4800, clothing: true, colors: { White: "images/merchandise/Men%20Hoodie%20Mockup%2C%20Back%20View.jpg", Navy: "images/merchandise/hoodie.svg" } },
+      tshirt: { name: "Welyd Essential T-Shirt", price: 2000, clothing: true, colors: { Blue: "images/merchandise/Gemini_Generated_Image_2p6s4n2p6s4n2p6s.jpg", White: "images/merchandise/tshirt.svg" } },
+      polo: { name: "Welyd Logo Polo", price: 3500, clothing: true, colors: { Cream: "images/merchandise/Gemini_Generated_Image_c7g1ugc7g1ugc7g1.jpg", Navy: "images/merchandise/polo-navy.svg" } },
+      cap: { name: "Welyd Everyday Cap", price: 1500, clothing: false, colors: { Blue: "images/merchandise/Gemini_Generated_Image_doq2msdoq2msdoq2.jpg", White: "images/merchandise/Gemini_Generated_Image_reejzmreejzmreej.jpg" } },
+      bottle: { name: "Welyd Water Bottle", price: 1800, clothing: false, colors: { Black: "images/merchandise/Gemini_Generated_Image_9g0cuk9g0cuk9g0c.jpg", White: "images/merchandise/Gemini_Generated_Image_ravmmhravmmhravm.jpg" } },
+      "tote-bag": { name: "Welyd Tote Bag", price: 1200, clothing: false, colors: { Teal: "images/merchandise/tote-bag.jpg" } },
+      "stainless-bottle": { name: "Welyd Stainless Steel Bottle", price: 2800, clothing: false, colors: { Silver: "images/merchandise/stainless-steel-bottle.jpg" } },
+      beanie: { name: "Welyd Cold-Weather Beanie", price: 1600, clothing: false, colors: { "Blue and Mint": "images/merchandise/cold-weather-beanies.jpg" } },
+      "coffee-mug": { name: "Welyd Coffee Mug", price: 1000, clothing: false, colors: { Coral: "images/merchandise/coffee-mug.jpg" } }
+    };
+    const sizeOptions = ["S", "M", "L", "XL", "XXL"];
+    const itemsList = document.querySelector("[data-delivery-items]");
+    const emptyMessage = document.querySelector("[data-delivery-empty]");
+    const subtotalLabel = document.querySelector("[data-delivery-subtotal]");
+    const status = deliveryCheckoutForm.querySelector("[data-delivery-status]");
+    const submitButton = deliveryCheckoutForm.querySelector("[data-delivery-submit]");
+    const result = deliveryCheckoutForm.querySelector("[data-delivery-result]");
+    const emailLink = deliveryCheckoutForm.querySelector("[data-delivery-email]");
+    const fulfilment = deliveryCheckoutForm.querySelector("#delivery-method");
+    const addressFields = [...deliveryCheckoutForm.querySelectorAll("#delivery-county, #delivery-area, #delivery-address")];
+    const addressSections = [...deliveryCheckoutForm.querySelectorAll(".delivery-address-field")];
+    let orderItems = [];
+    let cartReadError = false;
+
+    const formatPrice = (amount) => `KSh ${new Intl.NumberFormat("en-KE").format(amount)}`;
+    try {
+      const savedCart = localStorage.getItem("welyd-merch-cart");
+      const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+      if (!Array.isArray(parsedCart)) throw new Error("Saved merchandise bag is not a list.");
+      orderItems = parsedCart.filter((item) => {
+        const product = catalog[item.id];
+        const validSize = product && (product.clothing ? sizeOptions.includes(item.size) : item.size === "One size");
+        return validSize && Object.hasOwn(product.colors, item.color) && Number.isSafeInteger(item.quantity) && item.quantity > 0;
+      }).map((item) => ({ ...item, quantity: Math.min(item.quantity, 99) }));
+    } catch (error) {
+      cartReadError = true;
+      console.warn("Could not read the merchandise bag for checkout.", error);
+    }
+
+    const subtotal = orderItems.reduce((sum, item) => sum + catalog[item.id].price * item.quantity, 0);
+    orderItems.forEach((item) => {
+      const product = catalog[item.id];
+      const row = document.createElement("li");
+      row.className = "delivery-item";
+      const image = document.createElement("img");
+      image.className = "delivery-item-image";
+      image.src = product.colors[item.color];
+      image.alt = "";
+      image.setAttribute("aria-hidden", "true");
+      const details = document.createElement("div");
+      const name = document.createElement("strong");
+      name.textContent = product.name;
+      const variant = document.createElement("span");
+      variant.textContent = `${item.color}${product.clothing ? ` · Size ${item.size}` : ""} · Qty ${item.quantity}`;
+      const price = document.createElement("strong");
+      price.textContent = formatPrice(product.price * item.quantity);
+      details.append(name, variant);
+      row.append(image, details, price);
+      itemsList.append(row);
+    });
+    emptyMessage.hidden = orderItems.length > 0;
+    subtotalLabel.textContent = formatPrice(subtotal);
+    submitButton.disabled = orderItems.length === 0;
+    if (cartReadError) {
+      status.className = "form-status error";
+      status.textContent = "We couldn't read your saved bag. Return to the collection, refresh the page, and try again.";
+    } else if (!orderItems.length) {
+      status.className = "form-status info";
+      status.textContent = "Add at least one item to your bag before entering delivery details.";
+    }
+
+    const updateAddressRequirements = () => {
+      const needsAddress = fulfilment.value === "Deliver to my address";
+      addressFields.forEach((field) => {
+        field.required = needsAddress;
+      });
+      addressSections.forEach((section) => {
+        section.hidden = !needsAddress;
+      });
+    };
+    fulfilment.addEventListener("change", updateAddressRequirements);
+    updateAddressRequirements();
+
+    deliveryCheckoutForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      updateAddressRequirements();
+      if (!orderItems.length) {
+        status.className = "form-status error";
+        status.textContent = "Your bag is empty. Add merchandise before preparing a delivery request.";
+        return;
+      }
+      if (!deliveryCheckoutForm.reportValidity()) return;
+
+      const data = new FormData(deliveryCheckoutForm);
+      const orderLines = orderItems.map((item) => {
+        const product = catalog[item.id];
+        return `${product.name} - ${item.color}${product.clothing ? `, size ${item.size}` : ""}, quantity ${item.quantity}: ${formatPrice(product.price * item.quantity)}`;
+      });
+      const deliveryDetails = data.get("fulfilment") === "Deliver to my address"
+        ? [
+          `County or town: ${data.get("county")}`,
+          `Area or neighbourhood: ${data.get("area")}`,
+          `Street/building/address: ${data.get("address")}`,
+          `Postal code: ${data.get("postal_code") || "Not provided"}`,
+          `Directions/delivery notes: ${data.get("directions") || "None"}`
+        ]
+        : ["The customer would like to discuss collection or pickup."];
+      const body = [
+        `Name: ${data.get("name")}`,
+        `Email: ${data.get("email")}`,
+        `Phone or WhatsApp: ${data.get("phone")}`,
+        `Preferred fulfilment: ${data.get("fulfilment")}`,
+        ...deliveryDetails,
+        `Other order notes: ${data.get("notes") || "None"}`,
+        "",
+        "Requested items:",
+        ...orderLines,
+        `Merchandise subtotal: ${formatPrice(subtotal)}`,
+        "Delivery charge: To be confirmed",
+        "",
+        "Please confirm stock, total cost, delivery, and payment arrangements before treating this as an order."
+      ];
+      const subject = `Welyd Merchandise delivery request - ${data.get("name")}`;
+      emailLink.href = `mailto:hello@welydnetworks.co.ke?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body.join("\n"))}`;
+      result.hidden = false;
+      status.className = "form-status info";
+      status.textContent = "Your request is ready. Review the delivery details and merchandise summary in your email app; nothing is sent until you send that email.";
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      emailLink.focus({ preventScroll: true });
+    });
+  }
+
   const floatingActions = document.querySelector(".floating-actions");
   if (floatingActions) {
     const themeButton = document.createElement("button");
@@ -570,6 +994,66 @@ document.addEventListener("DOMContentLoaded", () => {
         if (serviceKey.includes(requestedServiceKey) || (isBrandingAndDesign && ["branding", "graphic design"].includes(serviceKey))) checkbox.checked = true;
       });
     }
+  }
+  const customMerchForm = document.querySelector("#custom-merch-request");
+  if (customMerchForm) {
+    const productOptions = [...customMerchForm.querySelectorAll('input[name="products"]')];
+    const brandingOptions = [...customMerchForm.querySelectorAll('input[name="branding"]')];
+    const status = customMerchForm.querySelector("#custom-request-status");
+    const result = customMerchForm.querySelector("#custom-request-result");
+    const emailLink = customMerchForm.querySelector("[data-request-email-link]");
+
+    const syncProductQuantities = () => {
+      productOptions.forEach((option) => {
+        const quantity = [...customMerchForm.querySelectorAll('input[type="number"]')]
+          .find((field) => field.name === `quantity-${option.value}`);
+        quantity.disabled = !option.checked;
+        quantity.required = option.checked;
+      });
+      productOptions[0].setCustomValidity(productOptions.some((option) => option.checked) ? "" : "Choose at least one product type.");
+    };
+    const syncBrandingOptions = () => {
+      brandingOptions[0].setCustomValidity(brandingOptions.some((option) => option.checked) ? "" : "Choose a branding option, or select the recommendation option.");
+    };
+
+    productOptions.forEach((option) => option.addEventListener("change", syncProductQuantities));
+    brandingOptions.forEach((option) => option.addEventListener("change", syncBrandingOptions));
+    syncProductQuantities();
+    syncBrandingOptions();
+
+    customMerchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      syncProductQuantities();
+      syncBrandingOptions();
+      if (!customMerchForm.reportValidity()) return;
+
+      const data = new FormData(customMerchForm);
+      const products = productOptions
+        .filter((option) => option.checked)
+        .map((option) => `${option.value}: ${data.get(`quantity-${option.value}`)}`);
+      const lines = [
+        `Name: ${data.get("name")}`,
+        `Business or organization: ${data.get("company")}`,
+        `Email: ${data.get("email")}`,
+        `Phone or WhatsApp: ${data.get("phone") || "Not provided"}`,
+        `Purpose: ${data.get("purpose")}`,
+        `Products and quantities: ${products.join("; ")}`,
+        `Branding: ${data.getAll("branding").join(", ")}`,
+        `Preferred colours: ${data.get("colours") || "Not specified"}`,
+        `Clothing sizes: ${data.get("sizes") || "Not specified"}`,
+        `Needed by: ${data.get("needed_by") || "Not specified"}`,
+        `Approximate budget: ${data.get("budget") || "Not specified"}`,
+        `Logo or brand guidelines: ${data.get("brand_link") || "Not provided"}`,
+        `Additional details: ${data.get("notes") || "None"}`
+      ];
+      const subject = `Custom merchandise request - ${data.get("company")}`;
+      emailLink.href = `mailto:hello@welydnetworks.co.ke?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+      result.hidden = false;
+      status.className = "form-status info";
+      status.textContent = "Your details are ready. Review them in your email app and send the message to submit your request.";
+      result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      emailLink.focus({ preventScroll: true });
+    });
   }
   inquiryForm?.addEventListener("submit", async (event) => {
     event.preventDefault();

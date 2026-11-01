@@ -2,6 +2,10 @@
 
 A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, website design, and a project-progress dashboard prototype. Every page displays a two-second loading screen with a progress bar. No build step or package install is required.
 
+The site includes Terms and Conditions and Privacy Policy pages linked from each page footer. The policy describes current website behavior; confirm the business contact details, hosting provider, retention periods, and privacy practices before connecting forms or launching.
+
+The Welyd Merchandise landing page features three products; `merchandise-shop.html` contains the full collection, colour and size choices, product previews, and a shopping bag saved in browser local storage. `checkout.html` reviews the bag and prepares an email draft with the customer's contact and requested delivery details. The customer must send the email; the site does not store or submit the delivery details, take payment, confirm stock, calculate delivery, or place orders. Prices are illustrative and set in KSh; clothing sizes are S–XXL. `custom-merchandise.html` similarly prepares an email draft for custom merchandise requests. Confirm the contact details and connect a secure commerce backend and payment provider before accepting orders.
+
 The Nairobi Events page contains 15 illustrative event formats for networking, exhibiting, learning, partnerships, and community engagement. These are sample use cases, not a live or verified event calendar; confirm event schedules and venues with organizers.
 
 Visitors can switch between the default and dark themes using the floating theme button. The preference is saved in the browser for future visits.

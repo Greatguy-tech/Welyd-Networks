@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout Preview | Welyd Networks</title>
+  <meta name="description" content="Review your Welyd Merchandise bag and prepare delivery details for an enquiry.">
+  <meta name="theme-color" content="#155eab">
+  <link rel="icon" href="images/welyd-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <div class="loading-screen" role="status" aria-live="polite">
+    <div class="loading-content">
+      <p class="loading-brand">Welyd <span>Networks</span></p>
+      <p class="loading-message">Getting things ready...</p>
+      <div class="loading-progress" role="progressbar" aria-label="Loading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="loading-progress-fill"></span></div>
+    </div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="topline"><div class="container"><span>Review your selection and delivery details.</span><span class="topline-extra"><a href="index.html">Visit Welyd Networks</a></span></div></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="merchandise.html" aria-label="Welyd Merchandise home"><img src="images/welyd-wordmark.png" alt="Welyd Networks"></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation"><span></span></button>
+      <div class="nav-wrap" id="primary-navigation">
+        <nav class="main-nav" aria-label="Checkout navigation"><a href="merchandise.html">Merchandise home</a><a href="merchandise-shop.html">Continue shopping</a></nav>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-hero"><div class="container">
+      <p class="breadcrumbs"><a href="merchandise.html">Welyd Merchandise</a> / <a href="merchandise-shop.html">Collection</a> / Checkout</p>
+      <p class="eyebrow">Checkout preview</p>
+      <h1>Delivery <span class="gradient-text">details.</span></h1>
+      <p>Review your bag and share where you would like your merchandise delivered. We will confirm availability, delivery cost, and next steps before anything is finalized.</p>
+    </div></section>
+    <section class="section section-soft">
+      <div class="container delivery-checkout-grid">
+        <section class="checkout-summary delivery-order-summary" aria-labelledby="delivery-summary-heading">
+          <div class="delivery-summary-heading"><div><p class="eyebrow">Your selection</p><h2 id="delivery-summary-heading">Order summary</h2></div><a class="text-link" href="merchandise-shop.html">Edit bag</a></div>
+          <p class="delivery-empty" data-delivery-empty>Your bag is empty. Add items from the collection before continuing.</p>
+          <ul class="delivery-items" data-delivery-items aria-live="polite"></ul>
+          <div class="cart-totals"><span>Merchandise subtotal</span><strong data-delivery-subtotal>KSh 0</strong></div>
+          <p class="checkout-note">Delivery charges are not included. They depend on your location and will be confirmed before any order is accepted.</p>
+          <a class="btn btn-secondary delivery-back-link" href="merchandise-shop.html">Continue shopping</a>
+        </section>
+        <form class="custom-request-form delivery-form" id="delivery-checkout-form" novalidate>
+          <p>Provide contact and location details so the team can respond about your delivery request.</p>
+          <div class="form-grid">
+            <div class="field"><label for="delivery-name">Full name *</label><input id="delivery-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="delivery-email">Email address *</label><input id="delivery-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="delivery-phone">Phone or WhatsApp *</label><input id="delivery-phone" name="phone" type="tel" autocomplete="tel" required placeholder="+254 …"></div>
+            <div class="field"><label for="delivery-method">Preferred fulfilment *</label><select id="delivery-method" name="fulfilment" required><option value="">Choose one</option><option>Deliver to my address</option><option>Discuss collection or pickup</option></select></div>
+            <div class="field delivery-address-field full"><label for="delivery-county">County or town *</label><input id="delivery-county" name="county" autocomplete="address-level1" required></div>
+            <div class="field delivery-address-field"><label for="delivery-area">Area or neighbourhood *</label><input id="delivery-area" name="area" autocomplete="address-level2" required></div>
+            <div class="field delivery-address-field"><label for="delivery-postal">Postal code (if applicable)</label><input id="delivery-postal" name="postal_code" autocomplete="postal-code"></div>
+            <div class="field delivery-address-field full"><label for="delivery-address">Street, building, or delivery address *</label><input id="delivery-address" name="address" autocomplete="street-address" required></div>
+            <div class="field delivery-address-field full"><label for="delivery-directions">Directions or delivery notes</label><textarea id="delivery-directions" name="directions" placeholder="Landmarks, gate instructions, or a suitable delivery time."></textarea></div>
+            <div class="field full"><label for="delivery-notes">Other order notes</label><textarea id="delivery-notes" name="notes" placeholder="Anything else we should know about your request?"></textarea></div>
+            <div class="field full"><label class="consent-row" for="delivery-consent"><input id="delivery-consent" name="consent" type="checkbox" required><span>I agree to share these details with Welyd Networks so the team can respond to my merchandise and delivery request. *</span></label></div>
+          </div>
+          <div class="form-actions"><button class="btn btn-primary" type="submit" data-delivery-submit>Prepare delivery request <span aria-hidden="true">→</span></button></div>
+          <div class="form-status" data-delivery-status role="status" aria-live="polite"></div>
+          <div class="request-result" data-delivery-result hidden>
+            <h2>Your request is ready</h2>
+            <p>Open the email draft to review your products and delivery details. The request is sent only when you send the email.</p>
+            <a class="btn btn-primary" data-delivery-email href="mailto:hello@welydnetworks.co.ke">Open email to send request <span aria-hidden="true">→</span></a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" aria-label="Welyd Networks home"><img src="images/welyd-wordmark-dark.png" alt="Welyd Networks"></a><p>Thoughtful creative and practical digital work for brands ready to grow.</p></div>
+      <div><h2 class="footer-title">Explore</h2><ul class="footer-links"><li><a href="merchandise.html">Merchandise home</a></li><li><a href="merchandise-shop.html">Shop the collection</a></li><li><a href="custom-merchandise.html">Custom merchandise</a></li></ul></div>
+      <div><h2 class="footer-title">Good to know</h2><ul class="footer-links"><li>Prices shown in KSh</li><li>Delivery cost confirmed separately</li><li>Store preview · not taking orders</li></ul></div>
+      <div><h2 class="footer-title">Contact</h2><ul class="footer-links"><li><a href="mailto:hello@welydnetworks.co.ke">hello@welydnetworks.co.ke</a></li><li>Nairobi, Kenya</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2026</span> Welyd Networks. All rights reserved.</span><span class="footer-legal-links"><a href="terms-and-conditions.html">Terms and Conditions</a><a href="privacy-policy.html">Privacy Policy</a></span></div>
+  </div></footer>
+  <div class="floating-actions"><button class="float-btn top" type="button" aria-label="Back to top">↑</button></div>
+</body>
+</html>

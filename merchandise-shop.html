@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop Welyd Merchandise | Welyd Networks</title>
+  <meta name="description" content="Shop the Welyd Networks merchandise collection: branded hoodies, T-shirts, polos, caps, and water bottles.">
+  <meta name="theme-color" content="#155eab">
+  <link rel="icon" href="images/welyd-icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body class="merch-store">
+  <div class="loading-screen" role="status" aria-live="polite">
+    <div class="loading-content">
+      <p class="loading-brand">Welyd <span>Networks</span></p>
+      <p class="loading-message">Getting things ready...</p>
+      <div class="loading-progress" role="progressbar" aria-label="Loading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="loading-progress-fill"></span></div>
+    </div>
+  </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="topline"><div class="container"><span>Welyd Networks, made for every day.</span><span class="topline-extra"><a href="index.html">Visit Welyd Networks</a></span></div></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="merchandise.html" aria-label="Welyd Merchandise home"><img src="images/welyd-wordmark.png" alt="Welyd Networks"></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation"><span></span></button>
+      <div class="nav-wrap" id="primary-navigation">
+        <nav class="main-nav" aria-label="Merchandise navigation">
+          <a href="merchandise.html">Merchandise home</a>
+          <a href="#collection">Collection</a>
+          <a href="custom-merchandise.html">Custom merchandise</a>
+        </nav>
+      </div>
+      <div class="merch-header-actions" aria-label="Account and bag">
+        <a class="header-icon-button" href="account.html" aria-label="My account" title="My account">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.8 20c.7-3.5 3.2-5.3 7.2-5.3s6.5 1.8 7.2 5.3"></path></svg>
+        </a>
+        <button class="header-icon-button merch-cart-toggle" type="button" data-cart-toggle aria-label="Open shopping bag" title="Shopping bag">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8.5h14l1 12H4l1-12Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>
+          <span class="cart-count" data-cart-count>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="section merch-shop" id="collection">
+      <div class="container merch-layout">
+        <div class="merch-main">
+          <div class="section-heading merch-heading"><p class="eyebrow">Made to wear on repeat</p><h2>Meet the <span class="gradient-text">collection.</span></h2><p>Premium-feel staples, designed around the Welyd Networks brand.</p><p class="merch-price-note">Sample prices in KSh · store preview only, not taking orders.</p></div>
+          <div class="merch-filters" role="group" aria-label="Filter merchandise">
+            <button type="button" class="merch-filter is-active" data-merch-filter="all" aria-pressed="true">All pieces</button>
+            <button type="button" class="merch-filter" data-merch-filter="clothing" aria-pressed="false">Clothing</button>
+            <button type="button" class="merch-filter" data-merch-filter="accessories" aria-pressed="false">Accessories</button>
+          </div>
+          <div class="merch-product-grid">
+            <article class="merch-product-card" id="hoodie" data-product-id="hoodie" data-category="clothing" data-price="4800" data-name="Welyd Hoodie" data-description="A soft, structured hoodie for cooler days, finished with the Welyd Networks mark." data-image="images/merchandise/Men%20Hoodie%20Mockup%2C%20Back%20View.jpg" data-clothing="true">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Hoodie"><img src="images/merchandise/Men%20Hoodie%20Mockup%2C%20Back%20View.jpg" alt="White hoodie with Welyd Networks branding" loading="lazy"><span class="merch-product-tag">THE SIGNATURE</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Welyd Hoodie</h3><span class="merch-price">KSh 4,800</span></div><p>Soft, structured, and made for cooler days.</p><label class="merch-size-label" for="color-hoodie">Colour</label><select class="merch-size merch-color" id="color-hoodie" aria-label="Choose hoodie colour"><option value="White" data-image="images/merchandise/Men%20Hoodie%20Mockup%2C%20Back%20View.jpg" data-alt="White hoodie with Welyd Networks branding">White</option><option value="Navy" data-image="images/merchandise/hoodie.svg" data-alt="Navy Welyd Networks hoodie mockup">Navy</option></select><label class="merch-size-label" for="size-hoodie">Size</label><select class="merch-size merch-size-choice" id="size-hoodie" aria-label="Choose hoodie size" required><option value="">Choose a size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" data-product-id="tshirt" data-category="clothing" data-price="2000" data-name="Welyd Essential T-Shirt" data-description="A comfortable cotton T-shirt with the Welyd mark for easy everyday wear." data-image="images/merchandise/Gemini_Generated_Image_2p6s4n2p6s4n2p6s.jpg" data-clothing="true">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Essential T-Shirt"><img src="images/merchandise/Gemini_Generated_Image_2p6s4n2p6s4n2p6s.jpg" alt="Blue Welyd-branded T-shirt mockup" loading="lazy"><span class="merch-product-tag">THE EVERYDAY</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Essential T-Shirt</h3><span class="merch-price">KSh 2,000</span></div><p>A clean fit and soft cotton for every day.</p><label class="merch-size-label" for="color-tshirt">Colour</label><select class="merch-size merch-color" id="color-tshirt" aria-label="Choose T-shirt colour"><option value="Blue" data-image="images/merchandise/Gemini_Generated_Image_2p6s4n2p6s4n2p6s.jpg" data-alt="Blue Welyd-branded T-shirt mockup">Blue</option><option value="White" data-image="images/merchandise/tshirt.svg" data-alt="White Welyd Networks T-shirt mockup">White</option></select><label class="merch-size-label" for="size-tshirt">Size</label><select class="merch-size merch-size-choice" id="size-tshirt" aria-label="Choose T-shirt size" required><option value="">Choose a size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="polo" data-product-id="polo" data-category="clothing" data-price="3500" data-name="Welyd Logo Polo" data-description="A polished polo shirt featuring the Welyd Networks logo. Smart-casual comfort for workdays and weekends." data-image="images/merchandise/Gemini_Generated_Image_c7g1ugc7g1ugc7g1.jpg" data-clothing="true">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Logo Polo"><img src="images/merchandise/Gemini_Generated_Image_c7g1ugc7g1ugc7g1.jpg" alt="Cream polo shirt worn with Welyd Networks logo branding" loading="lazy"><span class="merch-product-tag">THE SMART CASUAL</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Logo Polo</h3><span class="merch-price">KSh 3,500</span></div><p>A polished everyday shirt with the Welyd mark.</p><label class="merch-size-label" for="color-polo">Colour</label><select class="merch-size merch-color" id="color-polo" aria-label="Choose polo shirt colour"><option value="Cream" data-image="images/merchandise/Gemini_Generated_Image_c7g1ugc7g1ugc7g1.jpg" data-alt="Cream Welyd Networks polo shirt mockup">Cream</option><option value="Navy" data-image="images/merchandise/polo-navy.svg" data-alt="Navy Welyd Networks polo shirt mockup">Navy</option></select><label class="merch-size-label" for="size-polo">Size</label><select class="merch-size merch-size-choice" id="size-polo" aria-label="Choose polo shirt size" required><option value="">Choose a size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="cap" data-product-id="cap" data-category="accessories" data-price="1500" data-name="Welyd Everyday Cap" data-description="A structured cap with the Welyd Networks mark and an adjustable one-size fit." data-image="images/merchandise/Gemini_Generated_Image_doq2msdoq2msdoq2.jpg" data-clothing="false">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Everyday Cap"><img src="images/merchandise/Gemini_Generated_Image_doq2msdoq2msdoq2.jpg" alt="Blue cap featuring the Welyd Networks brand mark" loading="lazy"><span class="merch-product-tag">THE FINISHING TOUCH</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Everyday Cap</h3><span class="merch-price">KSh 1,500</span></div><p>Structured, adjustable, and ready to go.</p><label class="merch-size-label" for="color-cap">Colour</label><select class="merch-size merch-color" id="color-cap" aria-label="Choose cap colour"><option value="Blue" data-image="images/merchandise/Gemini_Generated_Image_doq2msdoq2msdoq2.jpg" data-alt="Blue cap featuring the Welyd Networks brand mark">Blue</option><option value="White" data-image="images/merchandise/Gemini_Generated_Image_reejzmreejzmreej.jpg" data-alt="White cap featuring the Welyd Networks brand mark">White</option></select><p class="merch-one-size">One size · Adjustable fit</p><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="bottle" data-product-id="bottle" data-category="accessories" data-price="1800" data-name="Welyd Water Bottle" data-description="A reusable water bottle with the Welyd Networks logo." data-image="images/merchandise/Gemini_Generated_Image_9g0cuk9g0cuk9g0c.jpg" data-clothing="false">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Insulated Bottle"><img src="images/merchandise/Gemini_Generated_Image_9g0cuk9g0cuk9g0c.jpg" alt="Black insulated bottle with Welyd Networks branding" loading="lazy"><span class="merch-product-tag">THE REFILL</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Water Bottle</h3><span class="merch-price">KSh 1,800</span></div><p>A reusable everyday essential, made to travel.</p><label class="merch-size-label" for="color-bottle">Colour</label><select class="merch-size merch-color" id="color-bottle" aria-label="Choose water bottle colour"><option value="Black" data-image="images/merchandise/Gemini_Generated_Image_9g0cuk9g0cuk9g0c.jpg" data-alt="Black Welyd Networks water bottle mockup">Black</option><option value="White" data-image="images/merchandise/Gemini_Generated_Image_ravmmhravmmhravm.jpg" data-alt="White Welyd Networks water bottle mockup">White</option></select><p class="merch-one-size">One size · Reusable</p><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="tote-bag" data-product-id="tote-bag" data-category="accessories" data-price="1200" data-name="Welyd Tote Bag" data-description="A reusable tote bag mockup, suitable for everyday carry, events, or branded gifting." data-image="images/merchandise/tote-bag.jpg" data-clothing="false">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Tote Bag"><img src="images/merchandise/tote-bag.jpg" alt="Teal tote bag mockup" loading="lazy"><span class="merch-product-tag">THE EVERYDAY CARRY</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Tote Bag</h3><span class="merch-price">KSh 1,200</span></div><p>A reusable bag for daily essentials and events.</p><label class="merch-size-label" for="color-tote-bag">Colour</label><select class="merch-size merch-color" id="color-tote-bag" aria-label="Choose tote bag colour"><option value="Teal" data-image="images/merchandise/tote-bag.jpg" data-alt="Teal tote bag mockup">Teal</option></select><p class="merch-one-size">One size · Reusable</p><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="stainless-bottle" data-product-id="stainless-bottle" data-category="accessories" data-price="2800" data-name="Welyd Stainless Steel Bottle" data-description="A reusable stainless steel bottle mockup with a clear lid." data-image="images/merchandise/stainless-steel-bottle.jpg" data-clothing="false">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Stainless Steel Bottle"><img src="images/merchandise/stainless-steel-bottle.jpg" alt="Silver stainless steel bottle or tumbler mockup with clear lid" loading="lazy"><span class="merch-product-tag">ON THE MOVE</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Stainless Steel Bottle</h3><span class="merch-price">KSh 2,800</span></div><p>A reusable stainless steel drink bottle for daily use.</p><label class="merch-size-label" for="color-stainless-bottle">Finish</label><select class="merch-size merch-color" id="color-stainless-bottle" aria-label="Choose stainless steel bottle finish"><option value="Silver" data-image="images/merchandise/stainless-steel-bottle.jpg" data-alt="Silver stainless steel bottle mockup">Silver</option></select><p class="merch-one-size">One size · Reusable</p><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="beanie" data-product-id="beanie" data-category="accessories" data-price="1600" data-name="Welyd Cold-Weather Beanie" data-description="A warm beanie mockup shown in blue and mint colourways." data-image="images/merchandise/cold-weather-beanies.jpg" data-clothing="false">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Cold-Weather Beanies"><img src="images/merchandise/cold-weather-beanies.jpg" alt="Blue and mint cold-weather beanie mockups" loading="lazy"><span class="merch-product-tag">COLD-WEATHER FAVOURITE</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Cold-Weather Beanie</h3><span class="merch-price">KSh 1,600</span></div><p>A cosy beanie mockup in two colour options.</p><label class="merch-size-label" for="color-beanie">Colour</label><select class="merch-size merch-color" id="color-beanie" aria-label="Choose beanie colour"><option value="Blue and Mint" data-image="images/merchandise/cold-weather-beanies.jpg" data-alt="Blue and mint cold-weather beanie mockups">Blue &amp; mint pair</option></select><p class="merch-one-size">One size · Stretch fit</p><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+            <article class="merch-product-card" id="coffee-mug" data-product-id="coffee-mug" data-category="accessories" data-price="1000" data-name="Welyd Coffee Mug" data-description="A classic coffee mug mockup for home, office, or gifting." data-image="images/merchandise/coffee-mug.jpg" data-clothing="false">
+              <button class="merch-product-image" type="button" data-preview-product aria-label="Preview Welyd Coffee Mug"><img src="images/merchandise/coffee-mug.jpg" alt="Coral coffee mug mockup" loading="lazy"><span class="merch-product-tag">DESK ESSENTIAL</span><span class="merch-preview-hint">View product</span></button>
+              <div class="merch-product-info"><div class="merch-product-title"><h3>Coffee Mug</h3><span class="merch-price">KSh 1,000</span></div><p>A colourful mug for coffee, tea, or the workday.</p><label class="merch-size-label" for="color-coffee-mug">Colour</label><select class="merch-size merch-color" id="color-coffee-mug" aria-label="Choose coffee mug colour"><option value="Coral" data-image="images/merchandise/coffee-mug.jpg" data-alt="Coral coffee mug mockup">Coral</option></select><p class="merch-one-size">One size · Ceramic-style mug</p><button class="btn btn-secondary merch-add" type="button" data-add-product>Add to bag <span aria-hidden="true">+</span></button></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+    <dialog class="merch-cart-dialog" id="merch-cart" aria-labelledby="cart-heading">
+        <aside class="merch-cart">
+          <button class="cart-panel-close" type="button" data-cart-close aria-label="Close shopping bag">×</button>
+          <div class="merch-cart-heading"><div><p class="eyebrow">Your selection</p><h2 id="cart-heading">Your bag <span class="cart-count" data-cart-count>0</span></h2></div><button class="cart-clear" type="button" data-cart-clear>Clear bag</button></div>
+          <div class="cart-empty" data-cart-empty><span aria-hidden="true">＋</span><p>Your bag is waiting.</p><span>Add something from the collection.</span></div>
+          <ul class="cart-items" data-cart-items aria-live="polite"></ul>
+          <div class="cart-totals"><span>Subtotal</span><strong data-cart-subtotal>KSh 0</strong></div>
+          <p class="cart-disclaimer">Store preview only. This bag is saved in this browser; payments, shipping, and order placement are not connected.</p>
+          <a class="btn btn-primary cart-checkout-link" href="checkout.html">Proceed to checkout <span aria-hidden="true">→</span></a>
+          <p class="cart-status" data-cart-status role="status" aria-live="polite"></p>
+        </aside>
+    </dialog>
+    <dialog class="merch-preview-dialog" aria-labelledby="preview-title">
+      <button class="preview-close" type="button" data-preview-close aria-label="Close product preview">×</button>
+      <div class="preview-layout">
+        <img class="preview-image" data-preview-image alt="">
+        <div class="preview-details">
+          <p class="eyebrow">Welyd Networks merchandise</p>
+          <h2 id="preview-title" data-preview-title></h2>
+          <p class="preview-price" data-preview-price></p>
+          <p data-preview-description></p>
+          <label class="merch-size-label" data-preview-color-label for="preview-color">Colour</label>
+          <select class="merch-size" data-preview-color id="preview-color"></select>
+          <label class="merch-size-label" data-preview-size-label for="preview-size">Size</label>
+          <select class="merch-size" data-preview-size id="preview-size"></select>
+          <p class="preview-one-size" data-preview-one-size hidden>One size · Adjustable fit</p>
+          <button class="btn btn-primary" type="button" data-preview-add>Add to bag</button>
+          <p class="preview-status" data-preview-status role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </dialog>
+    <section class="merch-story" id="about-merch"><div class="container merch-story-inner"><div><p class="eyebrow">Wear the work</p><h2>Built around the<br><span class="gradient-text">Welyd spirit.</span></h2></div><p>Thoughtful details. Everyday comfort. A simple mark that brings our community together. The Welyd collection is our brand, made tangible—nothing extra, just Welyd Networks.</p></div></section>
+  </main>
+  <footer class="site-footer"><div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" aria-label="Welyd Networks home"><img src="images/welyd-wordmark-dark.png" alt="Welyd Networks"></a><p>Thoughtful creative and practical digital work for brands ready to grow.</p></div>
+      <div><h2 class="footer-title">Explore</h2><ul class="footer-links"><li><a href="merchandise.html">Merchandise home</a></li><li><a href="#collection">The collection</a></li><li><a href="custom-merchandise.html">Custom merchandise</a></li><li><a href="index.html">Welyd Networks website</a></li></ul></div>
+      <div><h2 class="footer-title">The collection</h2><ul class="footer-links"><li><a href="#hoodie">Hoodies &amp; T-shirts</a></li><li><a href="#polo">Polos</a></li><li><a href="#cap">Caps</a></li><li><a href="#bottle">Bottles</a></li></ul></div>
+      <div><h2 class="footer-title">Good to know</h2><ul class="footer-links"><li>Prices shown in KSh</li><li>Clothing sizes S–XXL</li><li>Store preview · not taking orders</li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span data-year>2026</span> Welyd Networks. All rights reserved.</span><span class="footer-legal-links"><a href="terms-and-conditions.html">Terms and Conditions</a><a href="privacy-policy.html">Privacy Policy</a></span></div>
+  </div></footer>
+  <div class="floating-actions"><button class="float-btn top" type="button" aria-label="Back to top">↑</button></div>
+</body>
+</html>
