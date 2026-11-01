@@ -935,6 +935,7 @@ html[data-theme="dark"] .event-disclaimer { background: rgba(27,41,54,.9); }
 html[data-theme="dark"] .newsletter { background: #1a3043; }
 html[data-theme="dark"] .pillar-nav { background: rgba(16,24,32,.95); border-color: var(--line); }
 html[data-theme="dark"] .pillar-nav a { color: #b6d8ff; background: #203d59; }
+html[data-theme="dark"] .text-link { color: var(--blue); }
 html[data-theme="dark"] .ideal-box { color: #f2d8ca; background: #38291f; }
 html[data-theme="dark"] .table-wrap { background: var(--surface); border-color: var(--line); }
 html[data-theme="dark"] .pricing-table th { color: #d7e9ff; background: #20364c; }
