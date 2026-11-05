@@ -18,10 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (loadingScreen) {
     const loadingProgress = loadingScreen.querySelector(".loading-progress");
     const startedAt = performance.now();
+    const loadingDuration = 1000;
     document.documentElement.classList.add("is-loading");
 
     const progressInterval = window.setInterval(() => {
-      const progress = Math.min(Math.round((performance.now() - startedAt) / 20), 100);
+      const progress = Math.min(Math.round(((performance.now() - startedAt) / loadingDuration) * 100), 100);
       loadingProgress?.setAttribute("aria-valuenow", String(progress));
     }, 50);
 
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.documentElement.classList.remove("is-loading");
       loadingScreen.classList.add("is-hidden");
       window.setTimeout(() => loadingScreen.remove(), 350);
-    }, 2000);
+    }, loadingDuration);
   }
 
   const rotatingHeadline = document.querySelector(".hero-rotating-text");
@@ -545,10 +546,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     navWrap.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
+        closeMenu();
+        menuButton.focus();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".site-header")) closeMenu();
     });
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 980) closeMenu();
+      if (window.innerWidth > 1100) closeMenu();
     });
   }
 
@@ -565,16 +572,16 @@ document.addEventListener("DOMContentLoaded", () => {
     };
     toggle.addEventListener("click", (event) => {
       const isHoverPointer = event.detail > 0
-        && window.matchMedia("(hover: hover) and (min-width: 981px)").matches;
+        && window.matchMedia("(hover: hover) and (min-width: 1101px)").matches;
       const willOpen = isHoverPointer || toggle.getAttribute("aria-expanded") !== "true";
       if (willOpen) openDropdown();
       else closeDropdown();
     });
     dropdown.addEventListener("mouseenter", () => {
-      if (window.matchMedia("(hover: hover) and (min-width: 981px)").matches) openDropdown();
+      if (window.matchMedia("(hover: hover) and (min-width: 1101px)").matches) openDropdown();
     });
     dropdown.addEventListener("mouseleave", () => {
-      if (window.matchMedia("(hover: hover) and (min-width: 981px)").matches) closeDropdown();
+      if (window.matchMedia("(hover: hover) and (min-width: 1101px)").matches) closeDropdown();
     });
     document.addEventListener("click", (event) => {
       if (!dropdown.contains(event.target)) closeDropdown();
