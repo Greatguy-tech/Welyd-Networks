@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Project Progress Dashboard Prototype | Welyd Networks</title>
-  <meta name="description" content="Preview how Welyd Networks project milestones and deliverables can be shared with clients in a project progress dashboard.">
-  <meta name="theme-color" content="#155eab"><meta property="og:type" content="website"><meta property="og:title" content="Project Progress | Welyd Networks"><meta property="og:description" content="A prototype view of shared project milestones and deliverables."><meta property="og:image" content="https://welydnetworks.co.ke/images/welyd-wordmark.png"><meta property="og:url" content="https://welydnetworks.co.ke/project-progress.html">
+  <title>Interior Design Website Project Progress | Welyd Networks</title>
+  <meta name="description" content="Track the discovery, design, development, review, and launch milestones for a professional interior design company website.">
+  <meta name="theme-color" content="#155eab"><meta property="og:type" content="website"><meta property="og:title" content="Interior Design Website Project | Welyd Networks"><meta property="og:description" content="A four-week plan for a professional interior design company website."><meta property="og:image" content="https://welydnetworks.co.ke/images/welyd-wordmark.png"><meta property="og:url" content="https://welydnetworks.co.ke/project-progress.html">
   <link rel="icon" href="images/welyd-icon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"><script src="js/main.js" defer></script>
 </head>
 <body>
@@ -19,31 +19,40 @@
   <div class="topline"><div class="container"><span>Creative thinking. Measurable growth.</span><span class="topline-extra">Nairobi, Kenya &nbsp;·&nbsp; <a href="mailto:hello@welydnetworks.co.ke">hello@welydnetworks.co.ke</a></span></div></div>
   <header class="site-header"><div class="container header-inner"><a class="brand" href="index.html" aria-label="Welyd Networks home"><img src="images/welyd-wordmark.png" alt="Welyd Networks"></a><button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation"><span></span></button><div class="nav-wrap" id="primary-navigation"><nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="about.html">About Us</a><div class="nav-dropdown"><button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true">Services<span aria-hidden="true">+</span></button><div class="nav-dropdown-menu"><a href="services.html">All services</a><a href="branding-design.html">Branding &amp; graphic design</a><a href="digital-marketing.html">Digital marketing</a><a href="website-design.html">Website design</a></div></div><a href="events.html">Nairobi Events</a><a href="news.html">News &amp; Case Studies</a><a href="project-progress.html" aria-current="page">Project Progress</a></nav><a class="btn btn-primary nav-quote" href="inquiry.html">Send your inquiry <span aria-hidden="true">→</span></a></div></div></header>
   <main id="main">
-    <section class="page-hero"><div class="container"><p class="breadcrumbs"><a href="index.html">Home</a> / Project Progress</p><p class="eyebrow">A clearer view of the work</p><h1>Every milestone, <span class="gradient-text">in one place.</span></h1><p>See how a shared project workspace can make deliverables, approvals, and next steps easy to follow throughout our collaboration.</p></div></section>
+    <section class="page-hero"><div class="container"><p class="breadcrumbs"><a href="index.html">Home</a> / Project Progress</p><p class="eyebrow">Website project workspace</p><h1>Interior design website, <span class="gradient-text">from discovery to launch.</span></h1><p>A practical four-week plan for creating a polished, mobile-friendly website that presents the studio's work and helps prospective clients get in touch. The discovery meeting is the next step; we will confirm scope and dates together.</p></div></section>
     <section class="section progress-section">
       <div class="container">
-        <div class="prototype-notice" role="note"><span class="prototype-notice-icon" aria-hidden="true">i</span><p><strong>Dashboard prototype — sample information only.</strong> This page is not connected to client accounts or live project records. No login, private data, or real-time updates are enabled.</p></div>
+        <div class="prototype-notice" role="note"><span class="prototype-notice-icon" aria-hidden="true">i</span><p><strong>Browser-only workspace.</strong> Changes and updates are saved in this browser on this device. They do not sync to another device or provide private client access. Use together on this device; a shared client portal will need a backend and separate logins.</p></div>
         <div class="progress-dashboard">
           <div class="progress-toolbar">
-            <div class="progress-project-picker"><label for="demo-project">Preview a sample project</label><select id="demo-project"><option value="brand-identity">Brand identity project</option><option value="business-website">Business website project</option><option value="digital-marketing">Digital marketing project</option></select></div>
-            <span class="prototype-tag">Sample workspace</span>
+            <div class="progress-project-picker"><label for="discovery-date">Discovery meeting date (set when agreed)</label><input id="discovery-date" type="date" aria-describedby="discovery-date-help"><span id="discovery-date-help" class="progress-field-help">The four-week schedule is relative to this meeting; no dates are assumed yet.</span></div>
+            <span class="prototype-tag">Interior Design Website Project</span>
           </div>
           <div id="project-progress-content" aria-live="polite">
             <div class="progress-overview">
-              <div><p class="eyebrow">Project overview</p><h2 id="project-title">Brand identity project</h2><p id="project-description">A sample view of the stages and deliverables in a brand identity collaboration.</p></div>
-              <div class="progress-status"><span class="status-label">Current stage</span><strong id="project-current-stage">Visual concepts</strong></div>
+              <div><p class="eyebrow">Project overview</p><h2 id="project-title">Professional website for an interior design company</h2><p id="project-description">Plan and build a refined, responsive website to showcase interior projects, explain services, and make it simple for prospective clients to enquire. Final scope and content will be agreed at discovery.</p></div>
+              <div class="progress-status"><span class="status-label">Current stage</span><strong id="project-current-stage">Discovery meeting to be scheduled</strong></div>
             </div>
-            <div class="progress-meter-row"><div class="progress-meter" role="progressbar" aria-label="Completed project milestones" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40"><span id="project-progress-fill" style="width:40%"></span></div><strong id="project-progress-value">40% of milestones complete</strong></div>
-            <p class="progress-update" id="project-update">Example update: visual directions are being prepared for review.</p>
+            <div class="project-scope-grid">
+              <section class="project-scope-card" aria-labelledby="project-scope-title"><h3 id="project-scope-title">Proposed website scope</h3><ul><li>Core pages: Home, Studio, Services, Portfolio, Project details, and Contact.</li><li>Responsive layouts and an image-led portfolio to present completed interiors.</li><li>Clear enquiry journey, accessible page structure, and basic on-page SEO.</li><li>Final page count and any extra features to be agreed at discovery.</li></ul></section>
+              <section class="project-scope-card" aria-labelledby="project-inputs-title"><h3 id="project-inputs-title">Inputs to confirm at discovery</h3><ul><li>Studio story, services, ideal clients, and priority locations.</li><li>Approved project photography, captions, and permission to publish.</li><li>Brand assets, website copy, contact details, and enquiry requirements.</li><li>Domain and hosting access, plus who will review and approve each stage.</li></ul></section>
+            </div>
+            <div class="progress-meter-row"><div class="progress-meter" role="progressbar" aria-label="Completed project milestones" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="project-progress-fill" style="width:0%"></span></div><strong id="project-progress-value">0 of 6 milestones complete</strong></div>
+            <p class="progress-update" id="project-update">Next step: schedule the discovery meeting. We will confirm requirements, content, priorities, and the delivery plan together.</p>
             <ol class="project-milestones" id="project-milestones" aria-label="Project milestones">
-              <li class="project-milestone is-complete"><span class="milestone-marker" aria-hidden="true">✓</span><div class="milestone-copy"><div class="milestone-heading"><h3>Discovery &amp; kickoff</h3><span class="milestone-status">Complete</span></div><p>Goals, audience, and project requirements agreed together.</p><span class="milestone-deliverable"><strong>Deliverable:</strong> Approved project brief</span></div></li>
-              <li class="project-milestone is-complete"><span class="milestone-marker" aria-hidden="true">✓</span><div class="milestone-copy"><div class="milestone-heading"><h3>Brand strategy</h3><span class="milestone-status">Complete</span></div><p>Positioning and creative direction aligned to the business.</p><span class="milestone-deliverable"><strong>Deliverable:</strong> Strategy and direction</span></div></li>
-              <li class="project-milestone is-current"><span class="milestone-marker" aria-hidden="true">3</span><div class="milestone-copy"><div class="milestone-heading"><h3>Visual concepts</h3><span class="milestone-status">In progress</span></div><p>Initial identity concepts are being prepared for review.</p><span class="milestone-deliverable"><strong>Deliverable:</strong> Brand concept presentation</span></div></li>
-              <li class="project-milestone"><span class="milestone-marker" aria-hidden="true">4</span><div class="milestone-copy"><div class="milestone-heading"><h3>Refinement &amp; approval</h3><span class="milestone-status">Upcoming</span></div><p>Feedback is applied to the selected direction before approval.</p><span class="milestone-deliverable"><strong>Deliverable:</strong> Approved identity artwork</span></div></li>
-              <li class="project-milestone"><span class="milestone-marker" aria-hidden="true">5</span><div class="milestone-copy"><div class="milestone-heading"><h3>Files &amp; handover</h3><span class="milestone-status">Upcoming</span></div><p>Final files and practical usage guidance are prepared for handover.</p><span class="milestone-deliverable"><strong>Deliverable:</strong> Final brand asset package</span></div></li>
             </ol>
           </div>
-          <div class="progress-dashboard-footer"><p>In a live client portal, agreed scopes, dates, feedback, and approvals would be updated by the project team.</p><a class="btn btn-primary" href="inquiry.html">Discuss a project workspace <span aria-hidden="true">→</span></a></div>
+          <section class="project-updates" aria-labelledby="project-updates-title">
+            <div class="project-updates-heading"><div><p class="eyebrow">Project conversation</p><h2 id="project-updates-title">Updates &amp; questions</h2></div><label class="progress-role-picker" for="update-author">Posting as<select id="update-author"><option value="Welyd Networks">Welyd Networks</option><option value="Client">Client</option></select></label></div>
+            <ol class="project-update-list" id="project-update-list" aria-live="polite" aria-label="Project updates"></ol>
+            <form class="project-update-form" id="project-update-form">
+              <label for="project-update-input">Add a project update or question</label>
+              <textarea id="project-update-input" rows="3" maxlength="1000" required placeholder="Share a question, decision, feedback, or next step..."></textarea>
+              <div class="project-update-actions"><span>Updates are saved only in this browser.</span><button class="btn btn-primary" type="submit">Post update</button></div>
+            </form>
+          </section>
+          <p class="project-save-status" id="project-save-status" role="status" aria-live="polite"></p>
+          <div class="progress-dashboard-footer"><p>Four-week estimate begins after discovery and depends on timely content, feedback, and approvals. Exact scope and dates will be agreed at the meeting.</p><a class="btn btn-primary" href="inquiry.html">Contact us about this project <span aria-hidden="true">→</span></a></div>
         </div>
       </div>
     </section>

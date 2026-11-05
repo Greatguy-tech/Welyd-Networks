@@ -493,7 +493,9 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
 .progress-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 18px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
 .progress-project-picker { display: grid; width: min(390px,100%); gap: 7px; }
 .progress-project-picker label, .status-label { color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
-.progress-project-picker select { width: 100%; min-height: 48px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--paper); }
+.progress-project-picker select, .progress-project-picker input, .progress-role-picker select, .milestone-control select { min-height: 42px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--paper); font: inherit; }
+.progress-project-picker select, .progress-project-picker input { width: 100%; min-height: 48px; }
+.progress-field-help { color: var(--muted); font-size: .8rem; }
 .prototype-tag { padding: 7px 12px; border-radius: 999px; color: var(--blue-dark); background: #eaf3ff; font-size: .76rem; font-weight: 800; white-space: nowrap; }
 .progress-overview { display: flex; align-items: end; justify-content: space-between; gap: 22px; padding: 28px 0 20px; }
 .progress-overview .eyebrow { margin-bottom: 8px; }
@@ -501,6 +503,10 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
 .progress-overview p:not(.eyebrow) { margin: 9px 0 0; font-size: .93rem; }
 .progress-status { display: grid; min-width: 190px; gap: 6px; padding: 13px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--canvas); }
 .progress-status strong { color: var(--blue); font-size: .95rem; }
+.project-scope-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; margin-bottom: 22px; }
+.project-scope-card { padding: 17px 19px; border: 1px solid var(--line); border-radius: 13px; background: var(--canvas); }
+.project-scope-card h3 { margin-bottom: 9px; font-size: .98rem; letter-spacing: -.01em; }
+.project-scope-card ul { display: grid; gap: 6px; padding-left: 19px; margin: 0; color: var(--muted); font-size: .84rem; }
 .progress-meter-row { display: flex; align-items: center; gap: 14px; }
 .progress-meter { height: 10px; flex: 1; overflow: hidden; border-radius: 999px; background: var(--line); }
 .progress-meter span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--orange),var(--blue)); transition: width .3s ease; }
@@ -522,6 +528,31 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
 .milestone-copy > p { margin: 6px 0; font-size: .87rem; }
 .milestone-deliverable { display: block; color: var(--muted); font-size: .81rem; }
 .milestone-deliverable strong { color: var(--ink); }
+.milestone-timing { display: block; margin-top: 9px; color: var(--blue); font-size: .8rem; font-weight: 700; }
+.milestone-control { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.milestone-control > span, .progress-role-picker { color: var(--muted); font-size: .8rem; font-weight: 700; }
+.milestone-control select, .progress-role-picker select { min-height: 36px; padding: 6px 10px; font-size: .84rem; }
+.project-milestone.is-blocked .milestone-marker { border-color: #b42318; color: #b42318; box-shadow: 0 0 0 4px rgba(180,35,24,.1); }
+.is-blocked .milestone-status { color: #9c2c22; background: #fff0ed; }
+.project-updates { padding-top: 25px; margin-top: 25px; border-top: 1px solid var(--line); }
+.project-updates-heading { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 17px; }
+.project-updates-heading .eyebrow { margin-bottom: 6px; }
+.project-updates-heading h2 { font-size: clamp(1.35rem,2.4vw,1.8rem); }
+.progress-role-picker { display: grid; min-width: 180px; gap: 6px; }
+.project-update-list { display: grid; gap: 10px; max-height: 360px; padding: 0; margin: 0 0 18px; overflow-y: auto; list-style: none; }
+.project-update-entry, .project-update-empty { padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--canvas); }
+.project-update-entry-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 7px 16px; }
+.project-update-entry-heading strong { color: var(--ink); font-size: .87rem; }
+.project-update-entry-heading time { color: var(--muted); font-size: .77rem; }
+.project-update-entry p { margin: 8px 0 0; color: var(--muted); font-size: .9rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.project-update-empty { color: var(--muted); font-size: .88rem; }
+.project-update-form { display: grid; gap: 9px; }
+.project-update-form > label { color: var(--ink); font-size: .88rem; font-weight: 700; }
+.project-update-form textarea { width: 100%; min-height: 94px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--paper); font: inherit; resize: vertical; }
+.project-update-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.project-update-actions > span, .project-save-status { color: var(--muted); font-size: .79rem; }
+.project-save-status { min-height: 1.4em; margin: 12px 0 0; }
+.project-save-status:empty { display: none; }
 .progress-dashboard-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 24px; margin-top: 25px; border-top: 1px solid var(--line); }
 .progress-dashboard-footer p { max-width: 570px; margin: 0; font-size: .85rem; }
 .progress-dashboard-footer .btn { flex: 0 0 auto; }
@@ -772,8 +803,13 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
   .event-image { height: 210px; }
   .event-card-body { min-height: 0; }
   .progress-toolbar, .progress-dashboard-footer { align-items: stretch; flex-direction: column; }
+  .project-scope-grid { grid-template-columns: 1fr; }
   .progress-project-picker { width: 100%; }
   .prototype-tag { align-self: flex-start; }
+  .project-updates-heading { align-items: stretch; flex-direction: column; }
+  .progress-role-picker { width: 100%; }
+  .project-update-actions { align-items: stretch; flex-direction: column; }
+  .project-update-actions .btn { width: 100%; }
   .progress-meter-row { align-items: stretch; flex-direction: column; gap: 8px; }
   .progress-meter-row > strong { min-width: 0; text-align: left; }
   .milestone-heading { align-items: flex-start; flex-direction: column; gap: 7px; }
@@ -895,9 +931,18 @@ html[data-theme="dark"] .prototype-notice p { color: var(--muted); }
 html[data-theme="dark"] .prototype-notice strong,
 html[data-theme="dark"] .milestone-deliverable strong { color: var(--ink); }
 html[data-theme="dark"] .progress-project-picker select { color: var(--ink); background: #111b25; border-color: #46596c; }
+html[data-theme="dark"] .progress-project-picker input,
+html[data-theme="dark"] .progress-role-picker select,
+html[data-theme="dark"] .milestone-control select,
+html[data-theme="dark"] .project-update-form textarea { color: var(--ink); background: #111b25; border-color: #46596c; }
+html[data-theme="dark"] .project-update-entry,
+html[data-theme="dark"] .project-update-empty { background: var(--surface-raised); border-color: var(--line); }
+html[data-theme="dark"] .is-blocked .milestone-status { color: #ffc0b7; background: #492521; }
 html[data-theme="dark"] .prototype-tag { color: #b6d8ff; background: #203d59; }
 html[data-theme="dark"] .progress-status,
-html[data-theme="dark"] .progress-update { background: var(--surface-raised); }
+html[data-theme="dark"] .progress-update,
+html[data-theme="dark"] .project-scope-card { background: var(--surface-raised); }
+html[data-theme="dark"] .project-scope-card { border-color: var(--line); }
 html[data-theme="dark"] .milestone-marker { background: var(--surface); border-color: var(--line); }
 html[data-theme="dark"] .milestone-status { background: var(--surface-raised); }
 html[data-theme="dark"] .is-complete .milestone-status { color: #a7e5be; background: #153a2a; }

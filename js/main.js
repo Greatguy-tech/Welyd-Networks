@@ -626,75 +626,321 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const demoProjectSelect = document.querySelector("#demo-project");
   const projectProgressContent = document.querySelector("#project-progress-content");
-  if (demoProjectSelect && projectProgressContent) {
-    const demoProjects = {
-      "brand-identity": {
-        title: "Brand identity project",
-        description: "A sample view of the stages and deliverables in a brand identity collaboration.",
-        update: "Example update: visual directions are being prepared for review.",
-        milestones: [
-          ["Discovery & kickoff", "Goals, audience, and project requirements agreed together.", "Approved project brief", "complete"],
-          ["Brand strategy", "Positioning and creative direction aligned to the business.", "Strategy and direction", "complete"],
-          ["Visual concepts", "Initial identity concepts are being prepared for review.", "Brand concept presentation", "current"],
-          ["Refinement & approval", "Feedback is applied to the selected direction before approval.", "Approved identity artwork", "upcoming"],
-          ["Files & handover", "Final files and practical usage guidance are prepared for handover.", "Final brand asset package", "upcoming"]
-        ]
+  const projectMilestones = document.querySelector("#project-milestones");
+  if (projectProgressContent && projectMilestones) {
+    const storageKey = "welyd-interior-design-project-v1";
+    const milestonePlan = [
+      {
+        id: "discovery",
+        title: "Discovery & project brief",
+        description: "Meet to understand the studio, ideal clients, services, goals, required pages, budget, and launch priorities.",
+        deliverable: "Agreed project brief, scope, and content checklist",
+        target: "Week 1 · Days 1–3",
+        startDay: 1,
+        endDay: 3
       },
-      "business-website": {
-        title: "Business website project",
-        description: "A sample website build showing checkpoints from discovery through launch handover.",
-        update: "Example update: the first website build is ready for content and layout review.",
-        milestones: [
-          ["Discovery & scope", "Audience, site goals, key pages, and requirements agreed.", "Approved website brief", "complete"],
-          ["Structure & content", "Page hierarchy and content requirements mapped for review.", "Sitemap and content plan", "complete"],
-          ["Design direction", "Visual layout direction reviewed and approved for the build.", "Approved page designs", "complete"],
-          ["Development & review", "Website pages and agreed functionality assembled for testing.", "Preview website for feedback", "current"],
-          ["Testing & handover", "Final checks, launch preparation, and administrator guidance.", "Live site and handover notes", "upcoming"]
-        ]
+      {
+        id: "structure",
+        title: "Sitemap, content & wireframes",
+        description: "Plan the customer journey and page structure for the studio, services, portfolio, project stories, and enquiries.",
+        deliverable: "Approved sitemap, wireframes, and content plan",
+        target: "Week 1 · Days 2–7",
+        startDay: 2,
+        endDay: 7
       },
-      "digital-marketing": {
-        title: "Digital marketing project",
-        description: "A sample campaign collaboration showing planning, execution, review, and recommendations.",
-        update: "Example update: campaign priorities and audience segments are being aligned.",
-        milestones: [
-          ["Kickoff & goals", "Business goals, audience, channels, and success measures discussed.", "Campaign brief", "complete"],
-          ["Strategy & plan", "Channel approach, content direction, and activity schedule prepared.", "Campaign strategy and calendar", "current"],
-          ["Creative & setup", "Campaign assets and tracking are prepared for approval.", "Approved campaign assets", "upcoming"],
-          ["Campaign launch", "Approved activity is published and monitored against agreed measures.", "Live campaign activity", "upcoming"],
-          ["Review & next steps", "Performance is reviewed and practical next steps are shared.", "Campaign summary and recommendations", "upcoming"]
-        ]
+      {
+        id: "design",
+        title: "Visual design direction",
+        description: "Create a polished visual direction that reflects the interior design studio and presents its work clearly across screen sizes.",
+        deliverable: "Homepage and key-page design for client approval",
+        target: "Week 2 · Days 8–14",
+        startDay: 8,
+        endDay: 14
+      },
+      {
+        id: "build",
+        title: "Responsive website build",
+        description: "Build the approved pages, add agreed copy and project imagery, and configure enquiry pathways.",
+        deliverable: "Working website preview on desktop and mobile",
+        target: "Week 3 · Days 15–21",
+        startDay: 15,
+        endDay: 21
+      },
+      {
+        id: "review",
+        title: "Client review & refinements",
+        description: "Review the preview together, collect one consolidated round of feedback, and make the agreed refinements.",
+        deliverable: "Reviewed website and agreed final changes",
+        target: "Week 4 · Days 22–26",
+        startDay: 22,
+        endDay: 26
+      },
+      {
+        id: "launch",
+        title: "Quality check, launch & handover",
+        description: "Check links, forms, responsive layouts, and agreed launch details; publish and hand over the site.",
+        deliverable: "Launched website and handover notes",
+        target: "Week 4 · Days 27–30",
+        startDay: 27,
+        endDay: 30
+      }
+    ];
+    const validStatuses = new Set(["upcoming", "current", "complete", "blocked"]);
+    const statusLabels = {
+      upcoming: "Upcoming",
+      current: "In progress",
+      complete: "Complete",
+      blocked: "Needs attention"
+    };
+    const defaultState = () => ({
+      version: 1,
+      discoveryDate: "",
+      milestones: milestonePlan.map(({ id }) => ({ id, status: "upcoming" })),
+      updates: []
+    });
+    const saveStatus = document.querySelector("#project-save-status");
+    let projectState = defaultState();
+
+    try {
+      const savedState = localStorage.getItem(storageKey);
+      if (savedState) {
+        const parsedState = JSON.parse(savedState);
+        const isValidDate = !parsedState.discoveryDate || (
+          /^\d{4}-\d{2}-\d{2}$/.test(parsedState.discoveryDate)
+          && !Number.isNaN(Date.parse(`${parsedState.discoveryDate}T00:00:00.000Z`))
+          && new Date(`${parsedState.discoveryDate}T00:00:00.000Z`).toISOString().slice(0, 10) === parsedState.discoveryDate
+        );
+        const validMilestones = Array.isArray(parsedState.milestones)
+          && parsedState.milestones.length === milestonePlan.length
+          && parsedState.milestones.every((item, index) => (
+            item.id === milestonePlan[index].id && validStatuses.has(item.status)
+          ));
+        const validUpdates = Array.isArray(parsedState.updates)
+          && parsedState.updates.length <= 500
+          && parsedState.updates.every((item) => (
+            (item.author === "Client" || item.author === "Welyd Networks")
+            && typeof item.text === "string"
+            && item.text.length > 0
+            && item.text.length <= 1000
+            && typeof item.createdAt === "string"
+            && !Number.isNaN(Date.parse(item.createdAt))
+          ));
+        if (parsedState.version !== 1 || !isValidDate || !validMilestones || !validUpdates) {
+          throw new Error("Saved project workspace has an invalid format.");
+        }
+        projectState = parsedState;
+      }
+    } catch (error) {
+      console.warn("Could not load the saved project workspace.", error);
+      saveStatus.textContent = "The saved project workspace could not be read. Your saved data has not been changed.";
+      return;
+    }
+
+    const formatDate = (dateString) => {
+      const [year, month, day] = dateString.split("-").map(Number);
+      return new Intl.DateTimeFormat("en-KE", {
+        day: "numeric",
+        month: "short",
+        timeZone: "UTC"
+      }).format(new Date(Date.UTC(year, month - 1, day, 12)));
+    };
+    const addDays = (dateString, days) => {
+      const [year, month, day] = dateString.split("-").map(Number);
+      const date = new Date(Date.UTC(year, month - 1, day + days, 12));
+      return date.toISOString().slice(0, 10);
+    };
+    const formatTarget = (milestone) => {
+      if (!projectState.discoveryDate) return `${milestone.target} · set discovery date for calendar dates`;
+      const start = formatDate(addDays(projectState.discoveryDate, milestone.startDay));
+      const end = formatDate(addDays(projectState.discoveryDate, milestone.endDay));
+      return `${milestone.target} · ${start}–${end}`;
+    };
+    const persistProject = () => {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(projectState));
+        saveStatus.textContent = "Saved in this browser.";
+        return true;
+      } catch (error) {
+        console.warn("Could not save the project workspace.", error);
+        saveStatus.textContent = "Could not save your changes in this browser. Check browser storage and try again.";
+        return false;
       }
     };
+    const getStatusClass = (status) => status === "upcoming" ? "" : `is-${status}`;
+    const renderMilestones = () => {
+      projectMilestones.replaceChildren(...milestonePlan.map((milestone, index) => {
+        const status = projectState.milestones[index].status;
+        const item = document.createElement("li");
+        item.className = `project-milestone ${getStatusClass(status)}`.trim();
+        const marker = document.createElement("span");
+        marker.className = "milestone-marker";
+        marker.setAttribute("aria-hidden", "true");
+        marker.textContent = status === "complete" ? "✓" : String(index + 1);
 
-    const renderDemoProject = () => {
-      const project = demoProjects[demoProjectSelect.value];
-      if (!project) {
-        console.error("The selected demo project could not be found.");
+        const copy = document.createElement("div");
+        copy.className = "milestone-copy";
+        const heading = document.createElement("div");
+        heading.className = "milestone-heading";
+        const title = document.createElement("h3");
+        title.textContent = milestone.title;
+        const statusText = document.createElement("span");
+        statusText.className = "milestone-status";
+        statusText.textContent = statusLabels[status];
+        heading.append(title, statusText);
+
+        const timing = document.createElement("span");
+        timing.className = "milestone-timing";
+        timing.textContent = formatTarget(milestone);
+        const description = document.createElement("p");
+        description.textContent = milestone.description;
+        const deliverable = document.createElement("span");
+        deliverable.className = "milestone-deliverable";
+        const deliverableLabel = document.createElement("strong");
+        deliverableLabel.textContent = "Deliverable: ";
+        deliverable.append(deliverableLabel, document.createTextNode(milestone.deliverable));
+
+        const controls = document.createElement("label");
+        controls.className = "milestone-control";
+        const controlLabel = document.createElement("span");
+        controlLabel.textContent = "Update milestone status";
+        const select = document.createElement("select");
+        select.setAttribute("aria-label", `Status for ${milestone.title}`);
+        select.dataset.milestoneStatus = milestone.id;
+        Object.entries(statusLabels).forEach(([value, label]) => {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = label;
+          select.append(option);
+        });
+        select.value = status;
+        controls.append(controlLabel, select);
+        copy.append(heading, timing, description, deliverable, controls);
+        item.append(marker, copy);
+        return item;
+      }));
+    };
+    const renderProgressSummary = () => {
+      const completed = projectState.milestones.filter(({ status }) => status === "complete").length;
+      const percentage = Math.round((completed / milestonePlan.length) * 100);
+      const progressBar = document.querySelector('[role="progressbar"][aria-label="Completed project milestones"]');
+      progressBar.setAttribute("aria-valuenow", String(percentage));
+      document.querySelector("#project-progress-fill").style.width = `${percentage}%`;
+      document.querySelector("#project-progress-value").textContent = `${completed} of ${milestonePlan.length} milestones complete · ${percentage}%`;
+
+      const current = projectState.milestones.findIndex(({ status }) => status === "current");
+      const blocked = projectState.milestones.findIndex(({ status }) => status === "blocked");
+      const upcoming = projectState.milestones.findIndex(({ status }) => status === "upcoming");
+      let stage = "Complete";
+      let update = "All milestones are marked complete. Review the project conversation for handover notes.";
+      if (current >= 0) stage = milestonePlan[current].title;
+      else if (blocked >= 0) stage = `Needs attention: ${milestonePlan[blocked].title}`;
+      else if (upcoming >= 0 && !projectState.discoveryDate && upcoming === 0) stage = "Discovery meeting to be scheduled";
+      else if (upcoming >= 0) stage = `Next: ${milestonePlan[upcoming].title}`;
+      document.querySelector("#project-current-stage").textContent = stage;
+      if (current >= 0) {
+        update = `In progress: ${milestonePlan[current].title}. Target: ${formatTarget(milestonePlan[current])}.`;
+      } else if (blocked >= 0) {
+        update = `Needs attention: ${milestonePlan[blocked].title}. Add a note in the project conversation to agree the next step.`;
+      } else if (upcoming === 0 && !projectState.discoveryDate) {
+        update = "Next step: schedule the discovery meeting. We will confirm requirements, content, priorities, and the delivery plan together.";
+      } else if (upcoming >= 0) {
+        update = `Next up: ${milestonePlan[upcoming].title}. Target: ${formatTarget(milestonePlan[upcoming])}.`;
+      }
+      document.querySelector("#project-update").textContent = update;
+    };
+    const renderUpdates = () => {
+      const updateList = document.querySelector("#project-update-list");
+      if (projectState.updates.length === 0) {
+        const emptyState = document.createElement("li");
+        emptyState.className = "project-update-empty";
+        emptyState.textContent = "No updates yet. Use this space to capture decisions, feedback, and questions after discovery.";
+        updateList.replaceChildren(emptyState);
         return;
       }
-      const completeCount = project.milestones.filter((milestone) => milestone[3] === "complete").length;
-      const progress = Math.round((completeCount / project.milestones.length) * 100);
-      const currentMilestone = project.milestones.find((milestone) => milestone[3] === "current");
-      document.querySelector("#project-title").textContent = project.title;
-      document.querySelector("#project-description").textContent = project.description;
-      document.querySelector("#project-current-stage").textContent = currentMilestone ? currentMilestone[0] : "Complete";
-      document.querySelector("#project-progress-value").textContent = `${progress}% of milestones complete`;
-      document.querySelector("#project-progress-fill").style.width = `${progress}%`;
-      document.querySelector("#project-update").textContent = project.update;
-      const progressBar = document.querySelector('[role="progressbar"][aria-label="Completed project milestones"]');
-      progressBar.setAttribute("aria-valuenow", String(progress));
-      document.querySelector("#project-milestones").innerHTML = project.milestones.map((milestone, index) => {
-        const [title, description, deliverable, status] = milestone;
-        const marker = status === "complete" ? "✓" : String(index + 1);
-        const label = status === "current" ? "In progress" : status === "complete" ? "Complete" : "Upcoming";
-        const stateClass = status === "complete" ? "is-complete" : status === "current" ? "is-current" : "";
-        return `<li class="project-milestone ${stateClass}"><span class="milestone-marker" aria-hidden="true">${marker}</span><div class="milestone-copy"><div class="milestone-heading"><h3>${title}</h3><span class="milestone-status">${label}</span></div><p>${description}</p><span class="milestone-deliverable"><strong>Deliverable:</strong> ${deliverable}</span></div></li>`;
-      }).join("");
+      updateList.replaceChildren(...projectState.updates.map((update) => {
+        const item = document.createElement("li");
+        item.className = "project-update-entry";
+        const heading = document.createElement("div");
+        heading.className = "project-update-entry-heading";
+        const author = document.createElement("strong");
+        author.textContent = update.author;
+        const date = document.createElement("time");
+        date.dateTime = update.createdAt;
+        date.textContent = new Intl.DateTimeFormat("en-KE", {
+          dateStyle: "medium",
+          timeStyle: "short"
+        }).format(new Date(update.createdAt));
+        const text = document.createElement("p");
+        text.textContent = update.text;
+        heading.append(author, date);
+        item.append(heading, text);
+        return item;
+      }));
     };
 
-    demoProjectSelect.addEventListener("change", renderDemoProject);
+    const discoveryDate = document.querySelector("#discovery-date");
+    discoveryDate.value = projectState.discoveryDate;
+    discoveryDate.addEventListener("change", () => {
+      const previousDate = projectState.discoveryDate;
+      projectState.discoveryDate = discoveryDate.value;
+      if (!persistProject()) {
+        projectState.discoveryDate = previousDate;
+        discoveryDate.value = previousDate;
+        return;
+      }
+      renderMilestones();
+      renderProgressSummary();
+    });
+    projectMilestones.addEventListener("change", (event) => {
+      const select = event.target.closest("[data-milestone-status]");
+      if (!select) return;
+      const milestoneIndex = projectState.milestones.findIndex(({ id }) => id === select.dataset.milestoneStatus);
+      if (milestoneIndex < 0) return;
+      const previousMilestones = projectState.milestones.map((item) => ({ ...item }));
+      const status = select.value;
+      if (!validStatuses.has(status)) return;
+      if (status === "current") {
+        projectState.milestones.forEach((item, index) => {
+          if (item.status === "current") item.status = "upcoming";
+          if (index === milestoneIndex) item.status = status;
+        });
+      } else {
+        projectState.milestones[milestoneIndex].status = status;
+      }
+      if (!persistProject()) {
+        projectState.milestones = previousMilestones;
+      }
+      renderMilestones();
+      renderProgressSummary();
+    });
+    document.querySelector("#project-update-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = document.querySelector("#project-update-input");
+      const text = input.value.trim();
+      if (!text) {
+        input.setCustomValidity("Enter an update before posting.");
+        input.reportValidity();
+        input.setCustomValidity("");
+        return;
+      }
+      const previousUpdates = projectState.updates;
+      projectState.updates = [...previousUpdates, {
+        author: document.querySelector("#update-author").value,
+        text,
+        createdAt: new Date().toISOString()
+      }].slice(-500);
+      if (persistProject()) {
+        input.value = "";
+        renderUpdates();
+      } else {
+        projectState.updates = previousUpdates;
+      }
+    });
+
+    renderMilestones();
+    renderProgressSummary();
+    renderUpdates();
   }
 
   const topButton = document.querySelector(".float-btn.top");

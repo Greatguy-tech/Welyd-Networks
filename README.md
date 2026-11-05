@@ -10,7 +10,7 @@ The Nairobi Events page contains 15 illustrative event formats for networking, e
 
 Visitors can switch between the default and dark themes using the floating theme button. The preference is saved in the browser for future visits.
 
-The Project Progress page demonstrates milestone tracking using illustrative sample projects. It is a front-end prototype only: it has no authentication, private client data, persistence, or live project updates. A secure client portal requires an authenticated backend and project-data storage before it can be used for real client collaboration.
+The Project Progress page contains an interactive four-week plan for an interior design company website. The discovery date, milestone statuses, and project updates are saved in the current browser using local storage, so they persist on that browser and device only; they do not sync with a client's device and should not be used for private project information. Shared client access requires a secure backend, authentication, and access controls.
 
 ## Run locally
 
@@ -22,7 +22,7 @@ The site uses external Google Fonts and photography from Unsplash and Magnific, 
 ## Edit the site
 
 - Replace the sample copy and contact details in the HTML pages.
-- The `project-progress.html` page demonstrates a sample project dashboard; milestone examples and progress figures are illustrative and are not connected to actual client projects.
+- The `project-progress.html` page contains the editable interior design website project plan. Its date, statuses, and updates are stored locally in the current browser only; use a secured backend before sharing private client data or promising cross-device updates.
 - Update the individual service pages (`branding-design.html`, `digital-marketing.html`, and `website-design.html`) as your offering and deliverables evolve. The service dropdown is shared across the site navigation.
 - The homepage highlights selected client projects; `news.html` lists the provided 11 client projects by service and industry. The project summaries do not claim unprovided results or display client artwork. Generic Magnific stock photos are used as representative industry imagery, not client deliverables; visible captions credit and link to each contributor and photo listing.
 - Use the web-sized image derivatives in `images/optimized/` in page layouts; the original supplied image files remain in `images/`.
