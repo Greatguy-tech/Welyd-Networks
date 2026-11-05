@@ -628,8 +628,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const projectProgressContent = document.querySelector("#project-progress-content");
   const projectMilestones = document.querySelector("#project-milestones");
-  if (projectProgressContent && projectMilestones) {
+  const demoProjectSelect = document.querySelector("#demo-project");
+  if (projectProgressContent && projectMilestones && demoProjectSelect) {
     const storageKey = "welyd-interior-design-project-v1";
+    const sampleProjects = {
+      "brand-identity": {
+        title: "Brand identity project",
+        description: "A sample view of the stages and deliverables in a brand identity collaboration.",
+        update: "Example update: visual directions are being prepared for review.",
+        currentStage: "Visual concepts",
+        footer: "In a live client portal, agreed scopes, dates, feedback, and approvals would be updated by the project team.",
+        milestones: [
+          ["Discovery & kickoff", "Goals, audience, and project requirements agreed together.", "Approved project brief", "complete"],
+          ["Brand strategy", "Positioning and creative direction aligned to the business.", "Strategy and direction", "complete"],
+          ["Visual concepts", "Initial identity concepts are being prepared for review.", "Brand concept presentation", "current"],
+          ["Refinement & approval", "Feedback is applied to the selected direction before approval.", "Approved identity artwork", "upcoming"],
+          ["Files & handover", "Final files and practical usage guidance are prepared for handover.", "Final brand asset package", "upcoming"]
+        ]
+      },
+      "business-website": {
+        title: "Business website project",
+        description: "A sample website build showing checkpoints from discovery through launch handover.",
+        update: "Example update: the first website build is ready for content and layout review.",
+        currentStage: "Development & review",
+        footer: "In a live client portal, agreed scopes, dates, feedback, and approvals would be updated by the project team.",
+        milestones: [
+          ["Discovery & scope", "Audience, site goals, key pages, and requirements agreed.", "Approved website brief", "complete"],
+          ["Structure & content", "Page hierarchy and content requirements mapped for review.", "Sitemap and content plan", "complete"],
+          ["Design direction", "Visual layout direction reviewed and approved for the build.", "Approved page designs", "complete"],
+          ["Development & review", "Website pages and agreed functionality assembled for testing.", "Preview website for feedback", "current"],
+          ["Testing & handover", "Final checks, launch preparation, and administrator guidance.", "Live site and handover notes", "upcoming"]
+        ]
+      },
+      "digital-marketing": {
+        title: "Digital marketing project",
+        description: "A sample campaign collaboration showing planning, execution, review, and recommendations.",
+        update: "Example update: campaign priorities and audience segments are being aligned.",
+        currentStage: "Strategy & plan",
+        footer: "In a live client portal, agreed scopes, dates, feedback, and approvals would be updated by the project team.",
+        milestones: [
+          ["Kickoff & goals", "Business goals, audience, channels, and success measures discussed.", "Campaign brief", "complete"],
+          ["Strategy & plan", "Channel approach, content direction, and activity schedule prepared.", "Campaign strategy and calendar", "current"],
+          ["Creative & setup", "Campaign assets and tracking are prepared for approval.", "Approved campaign assets", "upcoming"],
+          ["Campaign launch", "Approved activity is published and monitored against agreed measures.", "Live campaign activity", "upcoming"],
+          ["Review & next steps", "Performance is reviewed and practical next steps are shared.", "Campaign summary and recommendations", "upcoming"]
+        ]
+      }
+    };
+    const interiorProjectValue = "interior-design-website";
+    const interiorOnlyElements = [...document.querySelectorAll("[data-interior-project]")];
+    let renderInteriorProject = () => {};
     const milestonePlan = [
       {
         id: "discovery",
@@ -879,6 +927,64 @@ document.addEventListener("DOMContentLoaded", () => {
       }));
     };
 
+    const renderSampleProject = (project) => {
+      document.querySelector("#workspace-tag").textContent = "Sample workspace";
+      document.querySelector("#project-title").textContent = project.title;
+      document.querySelector("#project-description").textContent = project.description;
+      document.querySelector("#project-current-stage").textContent = project.currentStage;
+      document.querySelector("#project-update").textContent = project.update;
+      document.querySelector("#workspace-footer-copy").textContent = project.footer;
+      document.querySelector("#workspace-footer-link").textContent = "Discuss a project workspace →";
+      const completed = project.milestones.filter(([, , , status]) => status === "complete").length;
+      const progress = Math.round((completed / project.milestones.length) * 100);
+      document.querySelector("#project-progress-value").textContent = `${progress}% of milestones complete`;
+      document.querySelector("#project-progress-fill").style.width = `${progress}%`;
+      const progressBar = document.querySelector('[role="progressbar"][aria-label="Completed project milestones"]');
+      progressBar.setAttribute("aria-valuenow", String(progress));
+      projectMilestones.replaceChildren(...project.milestones.map(([titleText, descriptionText, deliverableText, status], index) => {
+        const item = document.createElement("li");
+        item.className = `project-milestone ${status === "upcoming" ? "" : `is-${status}`}`.trim();
+        const marker = document.createElement("span");
+        marker.className = "milestone-marker";
+        marker.setAttribute("aria-hidden", "true");
+        marker.textContent = status === "complete" ? "✓" : String(index + 1);
+        const copy = document.createElement("div");
+        copy.className = "milestone-copy";
+        const heading = document.createElement("div");
+        heading.className = "milestone-heading";
+        const title = document.createElement("h3");
+        title.textContent = titleText;
+        const milestoneStatus = document.createElement("span");
+        milestoneStatus.className = "milestone-status";
+        milestoneStatus.textContent = status === "current" ? "In progress" : status === "complete" ? "Complete" : "Upcoming";
+        heading.append(title, milestoneStatus);
+        const description = document.createElement("p");
+        description.textContent = descriptionText;
+        const deliverable = document.createElement("span");
+        deliverable.className = "milestone-deliverable";
+        const label = document.createElement("strong");
+        label.textContent = "Deliverable: ";
+        deliverable.append(label, document.createTextNode(deliverableText));
+        copy.append(heading, description, deliverable);
+        item.append(marker, copy);
+        return item;
+      }));
+      interiorOnlyElements.forEach((element) => { element.hidden = true; });
+    };
+    const renderSelectedProject = () => {
+      if (demoProjectSelect.value === interiorProjectValue) {
+        interiorOnlyElements.forEach((element) => { element.hidden = false; });
+        renderInteriorProject();
+        return;
+      }
+      const project = sampleProjects[demoProjectSelect.value];
+      if (!project) {
+        console.error("The selected sample project could not be found.");
+        return;
+      }
+      renderSampleProject(project);
+    };
+
     const discoveryDate = document.querySelector("#discovery-date");
     discoveryDate.value = projectState.discoveryDate;
     discoveryDate.addEventListener("change", () => {
@@ -938,9 +1044,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    renderMilestones();
-    renderProgressSummary();
-    renderUpdates();
+    renderInteriorProject = () => {
+      document.querySelector("#workspace-tag").textContent = "Interior Design Website Project";
+      document.querySelector("#project-title").textContent = "Professional website for an interior design company";
+      document.querySelector("#project-description").textContent = "Plan and build a refined, responsive website to showcase interior projects, explain services, and make it simple for prospective clients to enquire. Final scope and content will be agreed at discovery.";
+      document.querySelector("#workspace-footer-copy").textContent = "Four-week estimate begins after discovery and depends on timely content, feedback, and approvals. Exact scope and dates will be agreed at the meeting.";
+      document.querySelector("#workspace-footer-link").textContent = "Contact us about this project →";
+      renderMilestones();
+      renderProgressSummary();
+      renderUpdates();
+    };
+    demoProjectSelect.addEventListener("change", renderSelectedProject);
+    renderSelectedProject();
   }
 
   const topButton = document.querySelector(".float-btn.top");
