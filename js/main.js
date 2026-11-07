@@ -13,6 +13,22 @@ try {
 
 document.documentElement.dataset.theme = savedTheme;
 
+const migrateMerchCartItem = (item) => {
+  const wordedHoodieColors = {
+    Beige: "Beige - Less is More",
+    White: "White - Essentials Only",
+    Blue: "Sky Blue - Essentials Only",
+    Turquoise: "Turquoise - Essentials Only"
+  };
+  if (item.id === "hoodie" && Object.hasOwn(wordedHoodieColors, item.color)) {
+    return { ...item, id: "hoodie-words", color: wordedHoodieColors[item.color] };
+  }
+  if (item.id === "cap" && (item.color === "Blue" || item.color === "Light Blue")) {
+    return { ...item, id: "cap-words" };
+  }
+  return item;
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const loadingScreen = document.querySelector(".loading-screen");
   if (loadingScreen) {
@@ -80,16 +96,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }]));
     const sizeOptions = ["S", "M", "L", "XL", "XXL"];
     let cart = [];
+    let cartNeedsSave = false;
     try {
       const savedCart = localStorage.getItem(storageKey);
       if (savedCart) {
         const parsedCart = JSON.parse(savedCart);
         if (!Array.isArray(parsedCart)) throw new Error("Saved merchandise cart is not a list.");
-        cart = parsedCart.filter((item) => {
+        cart = parsedCart.map(migrateMerchCartItem).filter((item) => {
           const product = products.get(item.id);
           const validSize = product && (product.clothing ? sizeOptions.includes(item.size) : item.size === "One size");
           return validSize && product.colorImages[item.color] && Number.isSafeInteger(item.quantity) && item.quantity > 0;
         }).map((item) => ({ id: item.id, color: item.color, size: item.size, quantity: Math.min(item.quantity, 99) }));
+        cartNeedsSave = JSON.stringify(cart) !== savedCart;
       }
     } catch (error) {
       console.warn("Could not read the saved merchandise cart.", error);
@@ -102,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Could not save the merchandise cart in this browser.", error);
       }
     };
+    if (cartNeedsSave) saveCart();
     const formatPrice = (amount) => `KSh ${new Intl.NumberFormat("en-KE").format(amount)}`;
     const cartList = merchStore.querySelector("[data-cart-items]");
     const emptyMessage = merchStore.querySelector("[data-cart-empty]");
@@ -354,15 +373,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const deliveryCheckoutForm = document.querySelector("#delivery-checkout-form");
   if (deliveryCheckoutForm) {
     const catalog = {
-      hoodie: { name: "Welyd Hoodie", price: 4800, clothing: true, colors: { White: "images/merchandise/Men%20Hoodie%20Mockup%2C%20Back%20View.jpg", Navy: "images/merchandise/hoodie.svg" } },
-      tshirt: { name: "Welyd Essential T-Shirt", price: 2000, clothing: true, colors: { Blue: "images/merchandise/Gemini_Generated_Image_2p6s4n2p6s4n2p6s.jpg", White: "images/merchandise/tshirt.svg" } },
-      polo: { name: "Welyd Logo Polo", price: 3500, clothing: true, colors: { Cream: "images/merchandise/Gemini_Generated_Image_c7g1ugc7g1ugc7g1.jpg", Navy: "images/merchandise/polo-navy.svg" } },
-      cap: { name: "Welyd Everyday Cap", price: 1500, clothing: false, colors: { Blue: "images/merchandise/Gemini_Generated_Image_doq2msdoq2msdoq2.jpg", White: "images/merchandise/Gemini_Generated_Image_reejzmreejzmreej.jpg" } },
-      bottle: { name: "Welyd Water Bottle", price: 1800, clothing: false, colors: { Black: "images/merchandise/Gemini_Generated_Image_9g0cuk9g0cuk9g0c.jpg", White: "images/merchandise/Gemini_Generated_Image_ravmmhravmmhravm.jpg" } },
-      "tote-bag": { name: "Welyd Tote Bag", price: 1200, clothing: false, colors: { Teal: "images/merchandise/tote-bag.jpg" } },
-      "stainless-bottle": { name: "Welyd Stainless Steel Bottle", price: 2800, clothing: false, colors: { Silver: "images/merchandise/stainless-steel-bottle.jpg" } },
-      beanie: { name: "Welyd Cold-Weather Beanie", price: 1600, clothing: false, colors: { "Blue and Mint": "images/merchandise/cold-weather-beanies.jpg" } },
-      "coffee-mug": { name: "Welyd Coffee Mug", price: 1000, clothing: false, colors: { Coral: "images/merchandise/coffee-mug.jpg" } }
+      hoodie: { name: "Welyd Logo-Only Hoodie", price: 4800, clothing: true, colors: { Cream: "images/optimized/merchandise/hoodie-cream.jpg", Black: "images/optimized/merchandise/hoodie-black.jpg", Lavender: "images/optimized/merchandise/hoodie-lavender.jpg", "Sky Blue": "images/optimized/merchandise/hoodie-sky-blue.jpg" } },
+      "hoodie-words": { name: "Welyd Worded Hoodie", price: 4800, clothing: true, colors: { "Beige - Less is More": "images/optimized/merchandise/hoodie-words-beige-less-is-more.jpg", "Light Blue - Less is More": "images/optimized/merchandise/hoodie-words-light-blue-less-is-more.jpg", "Lavender - Less is More": "images/optimized/merchandise/hoodie-words-lavender-less-is-more.jpg", "Black - Less is More": "images/optimized/merchandise/hoodie-words-black-less-is-more.jpg", "Lavender - Essentials Only": "images/optimized/merchandise/hoodie-words-lavender-essentials.jpg", "Cream - Essentials Only": "images/optimized/merchandise/hoodie-words-cream-essentials.jpg", "White - Essentials Only": "images/optimized/merchandise/hoodie-words-white-essentials.jpg", "Black - Essentials Only": "images/optimized/merchandise/hoodie-words-black-essentials.jpg", "Turquoise - Essentials Only": "images/optimized/merchandise/hoodie-words-turquoise-essentials.jpg", "Sky Blue - Essentials Only": "images/optimized/merchandise/hoodie-words-sky-blue-essentials.jpg" } },
+      tshirt: { name: "Welyd Essential T-Shirt", price: 2000, clothing: true, colors: { Black: "images/optimized/merchandise/tshirt-black.jpg", Orange: "images/optimized/merchandise/tshirt-orange.jpg" } },
+      polo: { name: "Welyd Logo Polo", price: 3500, clothing: true, colors: { Cream: "images/optimized/merchandise/polo-cream.jpg" } },
+      cap: { name: "Welyd Logo-Only Cap", price: 1500, clothing: false, colors: { Yellow: "images/optimized/merchandise/cap-yellow.jpg", "Light Blue": "images/optimized/merchandise/cap-light-blue-logo.jpg", Lavender: "images/optimized/merchandise/cap-lavender.jpg", Beige: "images/optimized/merchandise/cap-beige.jpg", Black: "images/optimized/merchandise/cap-black.jpg", White: "images/optimized/merchandise/cap-white.jpg", Pink: "images/optimized/merchandise/cap-pink.jpg" } },
+      "cap-words": { name: "Welyd Worded Cap", price: 1500, clothing: false, colors: { Blue: "images/optimized/merchandise/cap-blue.jpg", "Light Blue": "images/optimized/merchandise/cap-light-blue.jpg" } },
+      bottle: { name: "Welyd Water Bottle", price: 1800, clothing: false, colors: { Black: "images/optimized/merchandise/water-bottle-black.jpg", White: "images/optimized/merchandise/water-bottle-white.jpg" } },
+      "stainless-bottle": { name: "Welyd Stainless Steel Bottle", price: 2800, clothing: false, colors: { White: "images/optimized/merchandise/stainless-bottle-white.jpg" } },
+      beanie: { name: "Welyd Beanie", price: 1600, clothing: false, colors: { Blue: "images/optimized/merchandise/beanie-blue.jpg", "Light Blue": "images/optimized/merchandise/beanie-light-blue.jpg", White: "images/optimized/merchandise/beanie-white.jpg", Black: "images/optimized/merchandise/beanie-black.jpg", Gray: "images/optimized/merchandise/beanie-gray.jpg", Green: "images/optimized/merchandise/beanie-green.jpg", Pink: "images/optimized/merchandise/beanie-pink.jpg" } }
     };
     const sizeOptions = ["S", "M", "L", "XL", "XXL"];
     const itemsList = document.querySelector("[data-delivery-items]");
@@ -383,7 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const savedCart = localStorage.getItem("welyd-merch-cart");
       const parsedCart = savedCart ? JSON.parse(savedCart) : [];
       if (!Array.isArray(parsedCart)) throw new Error("Saved merchandise bag is not a list.");
-      orderItems = parsedCart.filter((item) => {
+      orderItems = parsedCart.map(migrateMerchCartItem).filter((item) => {
         const product = catalog[item.id];
         const validSize = product && (product.clothing ? sizeOptions.includes(item.size) : item.size === "One size");
         return validSize && Object.hasOwn(product.colors, item.color) && Number.isSafeInteger(item.quantity) && item.quantity > 0;
