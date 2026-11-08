@@ -22,13 +22,32 @@
     <section class="page-hero"><div class="container"><p class="breadcrumbs"><a href="index.html">Home</a> / Project Progress</p><p class="eyebrow">A clearer view of the work</p><h1>Every milestone, <span class="gradient-text">in one place.</span></h1><p>See how a shared project workspace can make deliverables, approvals, and next steps easy to follow throughout our collaboration.</p></div></section>
     <section class="section progress-section">
       <div class="container">
-        <div class="prototype-notice" role="note"><span class="prototype-notice-icon" aria-hidden="true">i</span><p><strong>Dashboard prototype — sample information only.</strong> This page is not connected to client accounts or live project records. No login, private data, or real-time updates are enabled. The interior design website option saves its date, milestone statuses, and updates in this browser only.</p></div>
+        <div class="prototype-notice" role="note"><span class="prototype-notice-icon" aria-hidden="true">i</span><p><strong>Dashboard prototype — sample information only.</strong> Project workspaces have a password prompt, but this browser-side gate is not secure authentication. Do not enter private client information. The interior design website option saves its date, milestone statuses, and updates in this browser only.</p></div>
         <div class="progress-dashboard">
           <div class="progress-toolbar">
-            <div class="progress-project-picker"><label for="demo-project">Preview a sample project</label><select id="demo-project"><option value="brand-identity">Brand identity project</option><option value="business-website">Business website project</option><option value="digital-marketing">Digital marketing project</option><option value="interior-design-website">Interior design website project</option></select></div>
-            <span class="prototype-tag" id="workspace-tag">Sample workspace</span>
+            <div class="progress-project-picker"><label for="demo-project">Choose a project workspace</label><select id="demo-project"><option value="brand-identity">Brand identity project</option><option value="business-website">Business website project</option><option value="digital-marketing">Digital marketing project</option><option value="interior-design-website">Interior design website project</option></select></div>
+            <div class="progress-workspace-actions"><span class="prototype-tag" id="workspace-tag">Locked workspace</span><button class="btn btn-secondary progress-lock-button" id="project-lock-button" type="button" hidden>Lock workspace</button></div>
           </div>
-          <div id="project-progress-content" aria-live="polite">
+          <section class="project-access-gate" id="project-access-gate" aria-labelledby="project-gate-title">
+            <div class="project-gate-art" aria-hidden="true">
+              <span class="project-gate-orbit project-gate-orbit-outer"></span><span class="project-gate-orbit project-gate-orbit-inner"></span>
+              <span class="project-gate-lock"><svg viewBox="0 0 48 48" fill="none"><path d="M14 21v-6a10 10 0 0 1 20 0v6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="10" y="21" width="28" height="22" rx="6" fill="currentColor"/><circle cx="24" cy="31" r="2.5" fill="var(--paper)"/><path d="M24 33.5v3" stroke="var(--paper)" stroke-width="2" stroke-linecap="round"/></svg></span>
+              <span class="project-gate-art-label">PRIVATE WORKSPACE<br><strong>ACCESS REQUIRED</strong></span>
+            </div>
+            <div class="project-gate-copy">
+              <span class="project-gate-kicker"><span aria-hidden="true"></span> Client project portal</span>
+              <h2 id="project-gate-title">Brand identity project</h2>
+              <p>Enter your workspace password to view milestones, deliverables, and the latest project notes.</p>
+              <form class="project-password-form" id="project-password-form">
+                <label for="project-password">Workspace password</label>
+                <div class="project-password-entry"><input id="project-password" type="password" inputmode="numeric" autocomplete="current-password" required aria-describedby="project-password-help project-password-status"><button class="btn btn-primary" type="submit">Open workspace <span aria-hidden="true">→</span></button></div>
+                <span class="progress-field-help" id="project-password-help">Your access stays active until you switch projects or lock the workspace.</span>
+                <p class="project-password-status" id="project-password-status" role="status" aria-live="polite"></p>
+              </form>
+              <div class="project-gate-footnote"><span aria-hidden="true">✦</span><span>One clear view of the work, from kickoff to handover.</span></div>
+            </div>
+          </section>
+          <div id="project-progress-content" aria-live="polite" hidden>
             <div class="progress-overview">
               <div><p class="eyebrow">Project overview</p><h2 id="project-title">Brand identity project</h2><p id="project-description">A sample view of the stages and deliverables in a brand identity collaboration.</p></div>
               <div class="progress-status"><span class="status-label">Current stage</span><strong id="project-current-stage">Visual concepts</strong></div>

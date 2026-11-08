@@ -649,6 +649,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const projectMilestones = document.querySelector("#project-milestones");
   const demoProjectSelect = document.querySelector("#demo-project");
   if (projectProgressContent && projectMilestones && demoProjectSelect) {
+    const projectPassword = "12345";
+    const accessGate = document.querySelector("#project-access-gate");
+    const passwordForm = document.querySelector("#project-password-form");
+    const passwordInput = document.querySelector("#project-password");
+    const passwordStatus = document.querySelector("#project-password-status");
+    const gateTitle = document.querySelector("#project-gate-title");
+    const lockButton = document.querySelector("#project-lock-button");
+    const workspaceTag = document.querySelector("#workspace-tag");
     const storageKey = "welyd-interior-design-project-v1";
     const sampleProjects = {
       "brand-identity": {
@@ -1003,6 +1011,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       renderSampleProject(project);
     };
+    const lockSelectedProject = () => {
+      projectProgressContent.hidden = true;
+      accessGate.hidden = false;
+      lockButton.hidden = true;
+      workspaceTag.textContent = "Locked workspace";
+      gateTitle.textContent = demoProjectSelect.selectedOptions[0]?.textContent || "Project workspace";
+      passwordInput.value = "";
+      passwordInput.setAttribute("aria-invalid", "false");
+      passwordStatus.textContent = "";
+      passwordStatus.classList.remove("is-error");
+    };
 
     const discoveryDate = document.querySelector("#discovery-date");
     discoveryDate.value = projectState.discoveryDate;
@@ -1073,8 +1092,33 @@ document.addEventListener("DOMContentLoaded", () => {
       renderProgressSummary();
       renderUpdates();
     };
-    demoProjectSelect.addEventListener("change", renderSelectedProject);
-    renderSelectedProject();
+    passwordForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (passwordInput.value !== projectPassword) {
+        passwordInput.setAttribute("aria-invalid", "true");
+        passwordStatus.textContent = "That password didn’t match. Please try again.";
+        passwordStatus.classList.add("is-error");
+        passwordInput.focus();
+        return;
+      }
+      passwordInput.setAttribute("aria-invalid", "false");
+      passwordStatus.textContent = "";
+      passwordStatus.classList.remove("is-error");
+      passwordInput.value = "";
+      accessGate.hidden = true;
+      projectProgressContent.hidden = false;
+      lockButton.hidden = false;
+      renderSelectedProject();
+    });
+    demoProjectSelect.addEventListener("change", () => {
+      lockSelectedProject();
+      passwordInput.focus();
+    });
+    lockButton.addEventListener("click", () => {
+      lockSelectedProject();
+      passwordInput.focus();
+    });
+    lockSelectedProject();
   }
 
   const topButton = document.querySelector(".float-btn.top");

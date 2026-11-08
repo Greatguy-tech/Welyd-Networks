@@ -561,6 +561,34 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
 .prototype-notice strong { color: var(--ink); }
 .progress-dashboard { padding: clamp(20px,4vw,40px); border: 1px solid var(--line); border-radius: 22px; background: var(--paper); box-shadow: var(--shadow); }
 .progress-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 18px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.progress-workspace-actions { display: flex; align-items: center; gap: 10px; }
+.progress-lock-button { min-height: 38px; padding: 8px 13px; font-size: .8rem; }
+.project-access-gate { position: relative; display: grid; grid-template-columns: minmax(210px,.8fr) minmax(0,1.2fr); align-items: center; gap: clamp(25px,5vw,58px); overflow: hidden; padding: clamp(20px,4vw,38px); margin-top: 25px; border: 1px solid var(--line); border-radius: 18px; background: radial-gradient(ellipse at 95% 0%,rgba(242,101,42,.11),transparent 38%),linear-gradient(130deg,#fffaf3,#f3eee6); }
+.project-access-gate[hidden], #project-progress-content[hidden] { display: none; }
+.project-gate-art { position: relative; display: grid; min-height: 250px; overflow: hidden; place-items: center; border-radius: 15px; color: #fff4e9; background: radial-gradient(circle at 50% 40%,rgba(255,255,255,.13),transparent 35%),linear-gradient(145deg,#123a5b,#155eab); }
+.project-gate-orbit { position: absolute; top: 50%; left: 50%; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; transform: translate(-50%,-50%); }
+.project-gate-orbit-outer { width: 220px; aspect-ratio: 1; }
+.project-gate-orbit-inner { width: 158px; aspect-ratio: 1; border-style: dashed; }
+.project-gate-lock { z-index: 1; display: grid; width: 82px; height: 82px; place-items: center; border: 1px solid rgba(255,255,255,.48); border-radius: 25px; color: white; background: linear-gradient(145deg,#ff9a68,#e75a27); box-shadow: 0 16px 38px rgba(8,24,43,.25); transform: rotate(-6deg); }
+.project-gate-lock svg { width: 43px; height: 43px; }
+.project-gate-art-label { position: absolute; right: 15px; bottom: 13px; left: 15px; color: rgba(255,255,255,.72); font-size: .64rem; font-weight: 700; letter-spacing: .14em; line-height: 1.7; text-align: center; }
+.project-gate-art-label strong { color: white; }
+.project-gate-copy { max-width: 520px; }
+.project-gate-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--blue); font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.project-gate-kicker > span { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); box-shadow: 0 0 0 4px rgba(242,101,42,.12); }
+.project-gate-copy h2 { font-size: clamp(1.45rem,2.7vw,2rem); }
+.project-gate-copy > p { margin: 11px 0 21px; font-size: .92rem; }
+.project-password-form { display: grid; gap: 8px; }
+.project-password-form > label { color: var(--ink); font-size: .82rem; font-weight: 800; }
+.project-password-entry { display: flex; gap: 9px; }
+.project-password-entry input { width: 100%; min-width: 0; min-height: 48px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: var(--paper); font: inherit; letter-spacing: .16em; }
+.project-password-entry input[aria-invalid="true"] { border-color: #b42318; box-shadow: 0 0 0 3px rgba(180,35,24,.1); }
+.project-password-entry .btn { flex: 0 0 auto; min-height: 48px; padding-inline: 16px; font-size: .84rem; }
+.project-password-status { min-height: 1.4em; margin: 0; color: var(--blue); font-size: .82rem; font-weight: 700; }
+.project-password-status:empty { display: none; }
+.project-password-status.is-error { color: #b42318; }
+.project-gate-footnote { display: flex; align-items: center; gap: 9px; padding-top: 15px; margin-top: 14px; border-top: 1px solid var(--line); color: var(--muted); font-size: .76rem; }
+.project-gate-footnote > span:first-child { color: var(--orange-dark); }
 .progress-project-picker { display: grid; width: min(390px,100%); gap: 7px; }
 .progress-project-picker label, .status-label { color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .progress-project-picker select, .progress-project-picker input, .progress-role-picker select, .milestone-control select { min-height: 42px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 9px; color: var(--ink); background: var(--paper); font: inherit; }
@@ -820,6 +848,8 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
   .timeline::before { display: none; }
   .progress-overview { align-items: stretch; flex-direction: column; }
   .progress-status { min-width: 0; }
+  .project-access-gate { grid-template-columns: 1fr; }
+  .project-gate-art { min-height: 190px; }
 }
 @media (max-width: 600px) {
   .container { width: min(var(--container), calc(100% - 32px)); }
@@ -894,6 +924,9 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
   .event-image { height: 210px; }
   .event-card-body { min-height: 0; }
   .progress-toolbar, .progress-dashboard-footer { align-items: stretch; flex-direction: column; }
+  .progress-workspace-actions { align-items: stretch; justify-content: space-between; }
+  .project-password-entry { flex-direction: column; }
+  .project-password-entry .btn { width: 100%; }
   .project-scope-grid { grid-template-columns: 1fr; }
   .progress-project-picker { width: 100%; }
   .prototype-tag { align-self: flex-start; }
@@ -1073,6 +1106,9 @@ html[data-theme="dark"] .prototype-notice { background: #38291f; border-color: #
 html[data-theme="dark"] .prototype-notice p { color: var(--muted); }
 html[data-theme="dark"] .prototype-notice strong,
 html[data-theme="dark"] .milestone-deliverable strong { color: var(--ink); }
+html[data-theme="dark"] .project-access-gate { background: radial-gradient(ellipse at 95% 0%,rgba(242,101,42,.1),transparent 38%),linear-gradient(130deg,var(--surface),var(--surface-raised)); border-color: var(--line); }
+html[data-theme="dark"] .project-password-entry input { color: var(--ink); background: #111b25; border-color: #46596c; }
+html[data-theme="dark"] .project-gate-footnote { border-color: var(--line); }
 html[data-theme="dark"] .progress-project-picker select { color: var(--ink); background: #111b25; border-color: #46596c; }
 html[data-theme="dark"] .progress-project-picker input,
 html[data-theme="dark"] .progress-role-picker select,
