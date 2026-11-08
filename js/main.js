@@ -654,6 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordForm = document.querySelector("#project-password-form");
     const passwordInput = document.querySelector("#project-password");
     const passwordStatus = document.querySelector("#project-password-status");
+    const projectLoadingScreen = document.querySelector("#project-loading-screen");
     const gateTitle = document.querySelector("#project-gate-title");
     const lockButton = document.querySelector("#project-lock-button");
     const workspaceTag = document.querySelector("#workspace-tag");
@@ -1012,6 +1013,7 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSampleProject(project);
     };
     const lockSelectedProject = () => {
+      projectLoadingScreen.hidden = true;
       projectProgressContent.hidden = true;
       accessGate.hidden = false;
       lockButton.hidden = true;
@@ -1021,6 +1023,9 @@ document.addEventListener("DOMContentLoaded", () => {
       passwordInput.setAttribute("aria-invalid", "false");
       passwordStatus.textContent = "";
       passwordStatus.classList.remove("is-error");
+      passwordInput.disabled = false;
+      passwordForm.querySelector('button[type="submit"]').disabled = false;
+      demoProjectSelect.disabled = false;
     };
 
     const discoveryDate = document.querySelector("#discovery-date");
@@ -1106,9 +1111,18 @@ document.addEventListener("DOMContentLoaded", () => {
       passwordStatus.classList.remove("is-error");
       passwordInput.value = "";
       accessGate.hidden = true;
-      projectProgressContent.hidden = false;
-      lockButton.hidden = false;
-      renderSelectedProject();
+      projectLoadingScreen.hidden = false;
+      passwordInput.disabled = true;
+      passwordForm.querySelector('button[type="submit"]').disabled = true;
+      demoProjectSelect.disabled = true;
+      workspaceTag.textContent = "Loading project";
+      window.setTimeout(() => {
+        renderSelectedProject();
+        projectLoadingScreen.hidden = true;
+        projectProgressContent.hidden = false;
+        lockButton.hidden = false;
+        demoProjectSelect.disabled = false;
+      }, 1000);
     });
     demoProjectSelect.addEventListener("change", () => {
       lockSelectedProject();
