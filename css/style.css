@@ -88,7 +88,7 @@ p { margin: 0 0 1rem; color: var(--muted); }
 .site-header { position: sticky; z-index: 50; top: 0; background: rgba(255,250,243,.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(14px); }
 .header-inner { display: flex; min-height: 80px; align-items: center; justify-content: space-between; gap: 20px; }
 .brand { flex: 0 0 auto; padding: 3px 8px; border-radius: 10px; background: #fff; }
-.brand img { width: 148px; height: 54px; object-fit: contain; object-position: center; }
+.brand img { width: 120px; height: 44px; object-fit: contain; object-position: center; }
 .nav-wrap { display: flex; align-items: center; gap: 22px; margin-inline: auto; }
 .main-nav { display: flex; align-items: center; gap: 22px; }
 .main-nav a { position: relative; padding: 8px 0; color: #465361; font-size: .88rem; font-weight: 700; white-space: nowrap; }
@@ -236,7 +236,7 @@ p { margin: 0 0 1rem; color: var(--muted); }
 .contact-card p, .contact-card a { margin: 0; color: var(--muted); font-size: .88rem; overflow-wrap: anywhere; }
 .site-footer { padding: 60px 0 22px; color: #d8e2ee; background: #101f30; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr .8fr .9fr 1fr; gap: 34px; padding-bottom: 40px; }
-.footer-brand img { width: 190px; height: 72px; object-fit: contain; object-position: center; }
+.footer-brand img { width: 145px; height: 55px; object-fit: contain; object-position: center; }
 .footer-brand p { max-width: 310px; margin-top: 17px; color: #b7c4d2; font-size: .9rem; }
 .footer-title { margin-bottom: 17px; color: white; font-size: 1rem; letter-spacing: 0; }
 .footer-links { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
@@ -842,7 +842,7 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
   .website-outcome { right: -3px; }
   .website-journey > .service-visual-note { left: 0; font-size: .7rem; }
   .section { padding: 60px 0; }
-  .brand img { width: 120px; height: 46px; }
+  .brand img { width: 104px; height: 40px; }
   .hero { padding: 44px 0 55px; }
   .merch-hero { padding: 43px 0 48px; }
   .merch-hero-grid, .merch-story-inner, .merch-custom-grid { grid-template-columns: 1fr; }
