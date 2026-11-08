@@ -61,17 +61,17 @@
             <p class="progress-update" id="project-update">Example update: visual directions are being prepared for review.</p>
             <ol class="project-milestones" id="project-milestones" aria-label="Project milestones">
             </ol>
+            <section class="project-updates" aria-labelledby="project-updates-title" data-interior-project hidden>
+              <div class="project-updates-heading"><div><p class="eyebrow">Project conversation</p><h2 id="project-updates-title">Updates &amp; questions</h2></div><label class="progress-role-picker" for="update-author">Posting as<select id="update-author"><option value="Welyd Networks">Welyd Networks</option><option value="Client">Client</option></select></label></div>
+              <ol class="project-update-list" id="project-update-list" aria-live="polite" aria-label="Project updates"></ol>
+              <form class="project-update-form" id="project-update-form">
+                <label for="project-update-input">Add a project update or question</label>
+                <textarea id="project-update-input" rows="3" maxlength="1000" required placeholder="Share a question, decision, feedback, or next step..."></textarea>
+                <div class="project-update-actions"><span>Updates are saved only in this browser.</span><button class="btn btn-primary" type="submit">Post update</button></div>
+              </form>
+            </section>
+            <p class="project-save-status" id="project-save-status" role="status" aria-live="polite" data-interior-project hidden></p>
           </div>
-          <section class="project-updates" aria-labelledby="project-updates-title" data-interior-project hidden>
-            <div class="project-updates-heading"><div><p class="eyebrow">Project conversation</p><h2 id="project-updates-title">Updates &amp; questions</h2></div><label class="progress-role-picker" for="update-author">Posting as<select id="update-author"><option value="Welyd Networks">Welyd Networks</option><option value="Client">Client</option></select></label></div>
-            <ol class="project-update-list" id="project-update-list" aria-live="polite" aria-label="Project updates"></ol>
-            <form class="project-update-form" id="project-update-form">
-              <label for="project-update-input">Add a project update or question</label>
-              <textarea id="project-update-input" rows="3" maxlength="1000" required placeholder="Share a question, decision, feedback, or next step..."></textarea>
-              <div class="project-update-actions"><span>Updates are saved only in this browser.</span><button class="btn btn-primary" type="submit">Post update</button></div>
-            </form>
-          </section>
-          <p class="project-save-status" id="project-save-status" role="status" aria-live="polite" data-interior-project hidden></p>
           <div class="progress-dashboard-footer"><p id="workspace-footer-copy">In a live client portal, agreed scopes, dates, feedback, and approvals would be updated by the project team.</p><a class="btn btn-primary" href="inquiry.html" id="workspace-footer-link">Discuss a project workspace <span aria-hidden="true">→</span></a></div>
         </div>
       </div>
