@@ -1,6 +1,6 @@
 # Welyd Networks website
 
-A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, website design, and a project-progress dashboard prototype. Every page displays a one-second loading screen with a progress bar. No build step or package install is required.
+A responsive static agency website built with plain HTML, CSS, and vanilla JavaScript. It includes an overview page and dedicated pages for branding and graphic design, digital marketing, website design, and a project-progress dashboard prototype. Every page displays a one-second loading screen with the Welyd icon encircled by a spinning progress ring; this is separate from the project-workspace unlock animation. No build step or package install is required.
 
 The site includes Terms and Conditions and Privacy Policy pages linked from each page footer. The policy describes current website behavior; confirm the business contact details, hosting provider, retention periods, and privacy practices before connecting forms or launching.
 
