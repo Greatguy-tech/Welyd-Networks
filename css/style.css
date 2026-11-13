@@ -247,8 +247,10 @@ p { margin: 0 0 1rem; color: var(--muted); }
 .footer-links a { color: #b7c4d2; font-size: .88rem; }
 .footer-links a:hover { color: white; }
 .social-links { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 17px; }
-.social-links a { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #425164; border-radius: 50%; color: white; font-size: .75rem; font-weight: 800; }
-.social-links a:hover { border-color: var(--orange); background: var(--orange); }
+.social-links a { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #425164; border-radius: 50%; color: white; transition: border-color .2s ease, background-color .2s ease, transform .2s ease; }
+.social-links a:hover { border-color: var(--orange); background: var(--orange); transform: translateY(-1px); }
+.social-links svg { display: block; width: 15px; height: 15px; fill: currentColor; }
+.social-links a[aria-label="Instagram"] svg, .social-links a[aria-label="LinkedIn"] svg, .social-links a[aria-label="Facebook"] svg { width: 16px; height: 16px; }
 .footer-bottom { display: flex; justify-content: space-between; gap: 15px; padding-top: 18px; border-top: 1px solid #334255; color: #adbac8; font-size: .82rem; }
 .floating-actions { position: fixed; z-index: 40; right: 18px; bottom: 18px; display: grid; gap: 10px; }
 .float-btn { display: grid; width: 50px; height: 50px; place-items: center; border: 0; border-radius: 50%; color: white; background: #1caa62; box-shadow: 0 6px 20px rgba(0,0,0,.2); font-size: 1.2rem; }
