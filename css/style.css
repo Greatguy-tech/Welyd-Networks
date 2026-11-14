@@ -1080,6 +1080,12 @@ html:not([data-theme="dark"]) .nav-wrap {
   background-color: var(--paper);
 }
 
+html:not([data-theme="dark"]) .filter-btn[aria-pressed="true"],
+html:not([data-theme="dark"]) .filter-btn:hover {
+  color: white;
+  background: var(--blue);
+}
+
 html[data-theme="dark"] {
   color-scheme: dark;
   --orange: #ff8653;
