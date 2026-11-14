@@ -8,7 +8,7 @@ The Welyd Merchandise landing page features three products; `merchandise-shop.ht
 
 The Nairobi Events page contains 15 illustrative event formats for networking, exhibiting, learning, partnerships, and community engagement. These are sample use cases, not a live or verified event calendar; confirm event schedules and venues with organizers.
 
-Visitors can switch between the default and dark themes using the floating theme button. The preference is saved in the browser for future visits.
+Visitors can switch between the default and dark themes using the floating theme button. The preference is saved in the browser for future visits. Both themes use a fixed, theme-specific gradient backdrop with translucent glass-style surfaces across the site.
 
 The Project Progress page retains its sample brand identity, business website, and digital marketing project options, with an additional interior design website option. Each workspace prompts for the demo password `12345` when selected. This password check runs in the browser and is visible in the site files; it is only a presentation gate, not security. Do not use it to protect real client information. The interior design discovery date, milestone statuses, and project updates are saved in the current browser using local storage; they persist on that browser and device only and do not sync with a client's device. Shared client access requires a secure backend, server-side authentication, and access controls.
 
