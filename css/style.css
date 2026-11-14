@@ -1293,3 +1293,137 @@ html:not([data-theme="dark"]) .merch-custom {
     radial-gradient(ellipse at 92% 10%, rgba(242,101,42,.28), transparent 34%),
     linear-gradient(120deg, #10243a, #164b78 72%, #155eab);
 }
+
+:root {
+  --glass-surface: rgba(255,255,255,.56);
+  --glass-panel: rgba(255,255,255,.76);
+  --glass-input: rgba(255,255,255,.58);
+  --glass-section: rgba(255,255,255,.12);
+  --button-primary-glass: rgba(183,58,14,.9);
+}
+
+html[data-theme="dark"] {
+  --glass-surface: rgba(19,31,45,.64);
+  --glass-panel: rgba(16,28,42,.82);
+  --glass-input: rgba(10,20,31,.64);
+  --glass-section: rgba(8,17,28,.2);
+  --button-primary-glass: rgba(190,72,35,.92);
+}
+
+body {
+  background-color: #f7f3ed;
+  background-image:
+    radial-gradient(ellipse at 8% 12%, rgba(255,159,106,.28), transparent 35%),
+    radial-gradient(ellipse at 88% 18%, rgba(83,157,225,.2), transparent 38%),
+    radial-gradient(ellipse at 72% 88%, rgba(104,184,164,.17), transparent 40%),
+    linear-gradient(135deg,#fff8ee 0%,#edf3f7 50%,#f6eee5 100%);
+  background-attachment: fixed;
+  background-position: top left, top right, bottom right, center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+html[data-theme="dark"] body {
+  background-color: #0b121d;
+  background-image:
+    radial-gradient(ellipse at 8% 12%, rgba(255,112,75,.18), transparent 36%),
+    radial-gradient(ellipse at 88% 20%, rgba(47,126,230,.28), transparent 40%),
+    radial-gradient(ellipse at 72% 88%, rgba(143,102,220,.19), transparent 42%),
+    linear-gradient(135deg,#0b121d 0%,#101d2b 52%,#111827 100%);
+  background-attachment: fixed;
+  background-position: top left, top right, bottom right, center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+html:not([data-theme="dark"]) :is(.hero,.page-hero,.service-intro,.service-detail-page .page-hero,.events-hero,.merch-hero,.merch-featured,.merch-shop,.merch-checkout,.section-soft,.progress-section),
+html[data-theme="dark"] :is(.hero,.page-hero,.service-intro,.service-detail-page .page-hero,.events-hero,.merch-hero,.merch-featured,.merch-shop,.merch-checkout,.section-soft,.progress-section) {
+  background: linear-gradient(135deg,var(--glass-section),transparent 78%);
+}
+
+html:not([data-theme="dark"]) .site-header,
+html[data-theme="dark"] .site-header,
+html:not([data-theme="dark"]) .pillar-nav,
+html[data-theme="dark"] .pillar-nav {
+  background: var(--glass-panel);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+
+html:not([data-theme="dark"]) .topline {
+  background: linear-gradient(105deg,#163d60 0%,#245f84 56%,#8d4b39 100%);
+}
+
+html[data-theme="dark"] .topline {
+  background: linear-gradient(105deg,#111d2a 0%,#163b5a 56%,#472d3b 100%);
+}
+
+html:not([data-theme="dark"]) .site-footer {
+  background: linear-gradient(125deg,#101d2b 0%,#173c59 58%,#382d3a 100%);
+}
+
+html[data-theme="dark"] .site-footer {
+  background: linear-gradient(125deg,#080e16 0%,#101e2c 58%,#1d1828 100%);
+}
+
+html:not([data-theme="dark"]) :is(.floating-stat,.stat-card,.service-card,.value-card,.package-card,.why-item,.work-card,.quote-card,.team-card,.contact-card,.article-card,.event-card,.event-filters,.inquiry-form,.inquiry-sidebar,.custom-request-form,.checkout-summary,.progress-dashboard,.project-access-gate,.project-loading-screen,.project-scope-card,.project-update-entry,.project-update-empty,.deliverables,.service-content .deliverables,.table-wrap,.newsletter,.merch-featured-card,.merch-product-card,.merch-cart,.merch-cart-dialog,.merch-cart-dialog .merch-cart,.merch-preview-dialog,.modal-dialog,.request-aside,.request-product-row,.delivery-order-summary,.delivery-empty,.case-details,.project-direction,.progress-status,.progress-update),
+html[data-theme="dark"] :is(.floating-stat,.stat-card,.service-card,.value-card,.package-card,.why-item,.work-card,.quote-card,.team-card,.contact-card,.article-card,.event-card,.event-filters,.inquiry-form,.inquiry-sidebar,.custom-request-form,.checkout-summary,.progress-dashboard,.project-access-gate,.project-loading-screen,.project-scope-card,.project-update-entry,.project-update-empty,.deliverables,.service-content .deliverables,.table-wrap,.newsletter,.merch-featured-card,.merch-product-card,.merch-cart,.merch-cart-dialog,.merch-cart-dialog .merch-cart,.merch-preview-dialog,.modal-dialog,.request-aside,.request-product-row,.delivery-order-summary,.delivery-empty,.case-details,.project-direction,.progress-status,.progress-update) {
+  background: var(--glass-surface);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+}
+
+html:not([data-theme="dark"]) :is(.prototype-notice,.request-result) {
+  background: rgba(242,101,42,.1);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+}
+
+html[data-theme="dark"] :is(.prototype-notice,.request-result) {
+  background: rgba(242,101,42,.13);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+}
+
+html:not([data-theme="dark"]) :is(.btn-secondary,.btn-light,.filter-btn,.merch-filter,.pillar-nav a,.tool-chip,.menu-toggle,.float-btn.top,.float-btn.theme-toggle,.cart-panel-close,.cart-quantity-button,.preview-close,.social-links a),
+html[data-theme="dark"] :is(.btn-secondary,.btn-light,.filter-btn,.merch-filter,.pillar-nav a,.tool-chip,.menu-toggle,.float-btn.top,.float-btn.theme-toggle,.cart-panel-close,.cart-quantity-button,.preview-close,.social-links a) {
+  background: var(--glass-surface);
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+}
+
+.btn-primary {
+  background: var(--button-primary-glass);
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+}
+
+html:not([data-theme="dark"]) .btn-primary:hover,
+html[data-theme="dark"] .btn-primary:hover {
+  background: var(--button-primary-glass);
+}
+
+html:not([data-theme="dark"]) :is(.filter-btn[aria-pressed="true"],.filter-btn:hover,.merch-filter:hover,.merch-filter.is-active),
+html[data-theme="dark"] :is(.filter-btn[aria-pressed="true"],.filter-btn:hover,.merch-filter:hover,.merch-filter.is-active) {
+  background-color: rgba(21,94,171,.88);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+}
+
+html[data-theme="dark"] :is(.filter-btn[aria-pressed="true"],.filter-btn:hover,.merch-filter:hover,.merch-filter.is-active) {
+  background-color: rgba(12,53,88,.9);
+}
+
+html:not([data-theme="dark"]) :is(.field input,.field select,.field textarea,.newsletter-form input,.event-filter-field select,.progress-project-picker input,.progress-project-picker select,.progress-role-picker select,.milestone-control select,.project-password-entry input,.project-update-form textarea,.merch-size,.request-product-quantity input),
+html[data-theme="dark"] :is(.field input,.field select,.field textarea,.newsletter-form input,.event-filter-field select,.progress-project-picker input,.progress-project-picker select,.progress-role-picker select,.milestone-control select,.project-password-entry input,.project-update-form textarea,.merch-size,.request-product-quantity input) {
+  background: var(--glass-input);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html:not([data-theme="dark"]) .nav-wrap,
+html[data-theme="dark"] .nav-wrap {
+  background: var(--glass-panel);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
