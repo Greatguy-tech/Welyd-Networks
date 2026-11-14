@@ -1200,6 +1200,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Luxury candles",
       service: "Brand identity",
       work: "Brand identity for a luxury candle company.",
+      direction: "A warm, premium identity built around the atmosphere of candlelight and the ritual of slowing down.",
+      highlights: ["Warm, ember-like colour", "Soft light and shadow", "A refined, memorable mark"],
       date: "June 2024"
     },
     "lee-fashions-ke": {
@@ -1209,6 +1211,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Fashion",
       service: "Brand identity",
       work: "Brand identity for a fashion company.",
+      direction: "A confident fashion identity that lets the collection lead, with an editorial feel suited to both digital and print presentation.",
+      highlights: ["Fashion-led visual language", "Clear collection presentation", "Consistent brand touchpoints"],
       date: "April 2023"
     },
     "tasean-ecotravel": {
@@ -1218,6 +1222,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Travel",
       service: "Brand identity",
       work: "Brand identity for a travel company.",
+      direction: "An inviting travel identity shaped around discovery, movement, and the promise of a well-planned journey.",
+      highlights: ["Destination-inspired colour", "A sense of movement", "Clear, welcoming travel communication"],
       date: "September 2025"
     },
     "monarch-architecture": {
@@ -1227,6 +1233,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Build and design",
       service: "Brand identity",
       work: "Brand identity for a build and design company.",
+      direction: "A precise, architectural visual language that balances technical detail with a polished, client-ready presentation.",
+      highlights: ["Plan-inspired linework", "Structured layouts", "A confident, considered palette"],
       date: "March 2025"
     },
     "ecs-financial-solutions": {
@@ -1236,6 +1244,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Financial solutions",
       service: "Brand identity",
       work: "Brand identity for a financial solutions company.",
+      direction: "A clear, assured identity that makes a complex financial offer feel approachable and professional.",
+      highlights: ["Strong, legible typography", "A balanced corporate palette", "Clarity across key communications"],
       date: "January 2026"
     },
     "construction-networking-nairobi": {
@@ -1245,6 +1255,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Construction events",
       service: "Web development",
       work: "Web development for a construction event company.",
+      direction: "An event-focused web experience that makes it easy to understand what is happening, who it is for, and how to take part.",
+      highlights: ["At-a-glance event information", "Straightforward attendee pathways", "A professional industry presence"],
       date: "October 2025"
     },
     "eterna-lume-studio": {
@@ -1254,6 +1266,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Interior design",
       service: "Web development",
       work: "Web development for an interior design studio.",
+      direction: "A portfolio-first website concept where generous imagery and calm typography give interior work room to speak.",
+      highlights: ["Project-led browsing", "Quiet, spacious layouts", "Clear enquiry prompts"],
       date: "May 2025"
     },
     "roselle-interiors": {
@@ -1263,6 +1277,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Interior design",
       service: "Web development",
       work: "Web development for an interior design company.",
+      direction: "A polished digital showcase that pairs considered room imagery with simple navigation and a clear route to enquire.",
+      highlights: ["Interior portfolio presentation", "Warm, restrained styling", "Accessible service information"],
       date: "February 2026"
     },
     "tenthgear-motorhub": {
@@ -1272,6 +1288,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "4x4 automotive parts",
       service: "Web development · E-commerce",
       work: "E-commerce website development for a 4x4 automotive parts company.",
+      direction: "A practical, product-led shopping experience that helps drivers browse parts and find the information they need before ordering.",
+      highlights: ["Easy-to-scan product categories", "Useful part details", "A clear path from browse to enquiry or order"],
       date: "July 2023"
     },
     "kepsa": {
@@ -1281,6 +1299,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Private sector",
       service: "Event design consultation",
       work: "Event design consultation.",
+      direction: "A cohesive event experience that helps important information feel clear before, during, and after the gathering.",
+      highlights: ["Consistent event look and feel", "Clear attendee communications", "A professional setting for connection"],
       date: "November 2024"
     },
     "ism-africa": {
@@ -1290,6 +1310,8 @@ document.addEventListener("DOMContentLoaded", () => {
       industry: "Construction",
       service: "Digital strategy",
       work: "Digital strategy for a construction company.",
+      direction: "A practical digital strategy that brings the company's expertise into focus and gives prospective clients a clear next step.",
+      highlights: ["Service-led content priorities", "A credible digital presence", "Clear enquiry pathways"],
       date: "2024–2026"
     },
     "content-plan": {
@@ -1375,13 +1397,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const article = articles[button.dataset.article];
       if (!article || !modal || !modalContent) return;
       modalOpener = button;
+      const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      })[character]);
       const caseHtml = article.category === "Client Work"
-        ? `<div class="case-details"><p><strong>Industry:</strong> ${article.industry}</p><p><strong>Service:</strong> ${article.service}</p><p><strong>Work:</strong> ${article.work}</p></div>`
+        ? (() => {
+          const image = button.closest(".article-card")?.querySelector(".client-project-image img");
+          const caption = image?.closest("figure")?.querySelector("figcaption")?.textContent.trim();
+          const visualHtml = image
+            ? `<figure class="project-story-visual"><img src="${escapeHtml(image.getAttribute("src"))}" alt="${escapeHtml(image.getAttribute("alt"))}" loading="lazy" decoding="async"><figcaption>${escapeHtml(caption || article.title)}</figcaption></figure>`
+            : "";
+          const highlights = article.highlights.map((highlight) => `<li>${escapeHtml(highlight)}</li>`).join("");
+          return `${visualHtml}<div class="project-case"><div class="case-details"><p><strong>Industry:</strong> ${escapeHtml(article.industry)}</p><p><strong>Service:</strong> ${escapeHtml(article.service)}</p><p><strong>Work:</strong> ${escapeHtml(article.work)}</p></div><section class="project-direction" aria-labelledby="project-direction-title"><p class="eyebrow">Creative direction</p><h3 id="project-direction-title">A concept shaped around the brief</h3><p>${escapeHtml(article.direction)}</p><ul class="project-highlight-list">${highlights}</ul></section><p class="project-visual-note">Project visuals are supplied artwork or representative imagery. Creative direction describes the brief, not unshared performance results.</p></div>`;
+        })()
         : `<div class="case-details"><p><strong>Key takeaway:</strong> ${article.results}</p><p>${article.solution}</p></div>`;
       const articleDate = article.date
         ? `<p class="article-meta">${article.category === "Client Work" ? `Project period: ${article.date}` : article.date}</p>`
         : "";
-      modalContent.innerHTML = `<span class="category-tag">${article.category}</span>${articleDate}<h2 id="modal-title">${article.title}</h2><p>${article.intro}</p>${caseHtml}`;
+      modalContent.innerHTML = article.category === "Client Work"
+        ? `<span class="category-tag">${escapeHtml(article.category)}</span>${articleDate}<h2 id="modal-title">${escapeHtml(article.title)}</h2><p>${escapeHtml(article.intro)}</p>${caseHtml}`
+        : `<span class="category-tag">${article.category}</span>${articleDate}<h2 id="modal-title">${article.title}</h2><p>${article.intro}</p>${caseHtml}`;
+      modal.querySelector(".modal-dialog").scrollTop = 0;
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-open");
