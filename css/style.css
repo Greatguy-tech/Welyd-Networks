@@ -794,6 +794,13 @@ html[data-theme="dark"] .preview-close { background: var(--surface-raised); }
 .project-highlight-list { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; padding: 0; margin: 0; list-style: none; }
 .project-highlight-list li { padding: 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--paper); font-size: .78rem; font-weight: 700; line-height: 1.45; }
 .project-visual-note { grid-column: 2; margin: -4px 0 0 !important; color: var(--muted); font-size: .75rem; }
+.modal.project-details-open .modal-dialog { font-size: .9rem; }
+.modal.project-details-open .modal-dialog h2 { font-size: clamp(1.35rem,3vw,1.8rem); }
+.modal.project-details-open .article-meta { font-size: .76rem; }
+.modal.project-details-open .project-story-visual figcaption { font-size: .7rem; }
+.modal.project-details-open .project-direction h3 { font-size: 1rem; }
+.modal.project-details-open .project-highlight-list li { font-size: .72rem; }
+.modal.project-details-open .project-visual-note { font-size: .68rem; }
 
 .inquiry-grid { display: grid; grid-template-columns: 1.25fr .75fr; align-items: start; gap: 28px; }
 .inquiry-form, .inquiry-sidebar { padding: 29px; border: 1px solid var(--line); border-radius: 20px; background: white; box-shadow: 0 8px 32px rgba(23,33,43,.04); }

@@ -1388,6 +1388,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModal = () => {
     if (!modal) return;
     modal.classList.remove("is-open");
+    modal.classList.remove("project-details-open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
     modalOpener?.focus();
@@ -1422,6 +1423,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ? `<span class="category-tag">${escapeHtml(article.category)}</span>${articleDate}<h2 id="modal-title">${escapeHtml(article.title)}</h2><p>${escapeHtml(article.intro)}</p>${caseHtml}`
         : `<span class="category-tag">${article.category}</span>${articleDate}<h2 id="modal-title">${article.title}</h2><p>${article.intro}</p>${caseHtml}`;
       modal.querySelector(".modal-dialog").scrollTop = 0;
+      modal.classList.toggle("project-details-open", article.category === "Client Work");
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-open");
